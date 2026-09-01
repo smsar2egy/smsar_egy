@@ -1,0 +1,922 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ property.title }} | smsar_egy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0b0b0b;
+            --black-light: #111111;
+            --black-card: #151515;
+
+            --yellow: #D4A72C;
+            --yellow-light: #e0b83c;
+
+            --white: #ffffff;
+            --gray: #999999;
+            --border: #292929;
+
+            --red: #e53935;
+            --green: #35b85a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            height: 70px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            border-bottom: 1px solid var(--yellow);
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            color: var(--yellow);
+            font-size: 27px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav a {
+            color: var(--yellow);
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .nav a:hover {
+            color: white;
+        }
+
+        /* PAGE */
+        .detail-page {
+            width: 100%;
+            max-width: 1150px;
+            margin: auto;
+            padding: 35px 20px 70px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--yellow);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* PROPERTY CARD */
+        .property-main-card {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            background: var(--black-light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* GALLERY */
+        .gallery {
+            width: 100%;
+            background: #090909;
+            padding-bottom: 15px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 500px;
+            background: #151515;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .main-no-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 15px;
+        }
+
+        .property-status {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            z-index: 10;
+            background: var(--yellow);
+            color: #000;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        /* THUMBNAILS */
+        .gallery-thumbnails {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 15px 15px 5px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--yellow) #111;
+            direction: rtl;
+        }
+
+        .gallery-thumbnails::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .gallery-thumbnails::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        .gallery-thumbnails::-webkit-scrollbar-thumb {
+            background: var(--yellow);
+            border-radius: 10px;
+        }
+
+        .gallery-thumb {
+            flex: 0 0 95px;
+            width: 95px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 7px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            opacity: .7;
+            transition: .2s;
+        }
+
+        .gallery-thumb:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .gallery-thumb.active {
+            opacity: 1;
+            border-color: var(--yellow);
+        }
+
+        /* INFO */
+        .property-info {
+            padding: 25px;
+        }
+
+        .property-info h1 {
+            color: var(--yellow);
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .location {
+            color: #ddd;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 17px 5px;
+            border-left: 1px solid var(--border);
+        }
+
+        .stat:last-child {
+            border-left: none;
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--yellow);
+            font-size: 21px;
+            margin-bottom: 5px;
+        }
+
+        .stat span {
+            color: var(--gray);
+            font-size: 11px;
+        }
+
+        /* DESCRIPTION */
+        .description h2 {
+            color: var(--yellow);
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .description p {
+            color: #ccc;
+            line-height: 1.9;
+            font-size: 14px;
+            white-space: pre-line;
+        }
+
+        /* PRICE */
+        .price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .price span {
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+        .price strong {
+            color: var(--yellow);
+            font-size: 25px;
+        }
+
+        /* BOOKING BUTTON */
+        .booking-open {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            background: var(--yellow);
+            color: #000;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .booking-open:hover {
+            background: white;
+        }
+
+        /* BOOKING PANEL */
+        .booking-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #080808;
+            border: 1px solid var(--yellow);
+            border-radius: 8px;
+        }
+
+        .booking-panel.active {
+            display: block;
+        }
+
+        .booking-title {
+            color: var(--yellow);
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        /* CALENDAR HEADER */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .calendar-header button {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--yellow);
+            background: transparent;
+            color: var(--yellow);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-header button:hover {
+            background: var(--yellow);
+            color: #000;
+        }
+
+        .calendar-header strong {
+            color: white;
+            font-size: 17px;
+        }
+
+        /* CALENDAR WEEK */
+        .calendar-week {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .calendar-week span {
+            text-align: center;
+            color: var(--yellow);
+            font-size: 11px;
+            padding: 8px 0;
+            font-weight: bold;
+        }
+
+        /* CALENDAR DAYS */
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .day {
+            min-height: 48px;
+            border: 1px solid var(--border);
+            background: #111;
+            color: white;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 13px;
+            position: relative;
+            transition: .2s;
+        }
+
+        .day:hover {
+            border-color: var(--yellow);
+            color: var(--yellow);
+            background: #191919;
+        }
+
+        .day.empty {
+            border: none;
+            background: transparent;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .day.disabled {
+            background: #211010;
+            color: #666;
+            border-color: #5c2222;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .day.disabled::after {
+            content: "";
+            position: absolute;
+            width: 32px;
+            height: 2px;
+            background: var(--red);
+            transform: rotate(-45deg);
+            border-radius: 2px;
+        }
+
+        .day.selected {
+            background: var(--yellow);
+            color: #000;
+            border-color: var(--yellow);
+            font-weight: bold;
+        }
+
+        .day.selected:hover {
+            background: var(--yellow);
+            color: #000;
+        }
+
+        /* SELECTED DATE */
+        .selected-date {
+            margin-top: 18px;
+            padding: 13px;
+            background: #111;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: #ccc;
+            font-size: 13px;
+            min-height: 45px;
+        }
+
+        .selected-date strong {
+            color: var(--yellow);
+        }
+
+        /* CONFIRM */
+        .confirm-booking {
+            width: 100%;
+            margin-top: 12px;
+            padding: 14px;
+            border: none;
+            border-radius: 5px;
+            background: var(--yellow);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .confirm-booking:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #000;
+            border-top: 1px solid var(--yellow);
+            text-align: center;
+            padding: 45px 20px;
+            color: var(--yellow);
+        }
+
+        .footer-logo {
+            font-size: 27px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        footer p {
+            color: #aaa;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 700px) {
+            .navbar {
+                height: 64px;
+                padding: 0 16px;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .nav {
+                gap: 10px;
+            }
+
+            .nav a {
+                font-size: 11px;
+            }
+
+            .detail-page {
+                padding: 20px 10px 50px;
+            }
+
+            .property-main-card {
+                border-radius: 8px;
+            }
+
+            .main-image {
+                height: 270px;
+            }
+
+            .gallery-thumbnails {
+                gap: 8px;
+                padding: 10px 10px 5px;
+            }
+
+            .gallery-thumb {
+                flex-basis: 78px;
+                width: 78px;
+                height: 62px;
+            }
+
+            .property-info {
+                padding: 17px;
+            }
+
+            .property-info h1 {
+                font-size: 23px;
+                line-height: 1.4;
+            }
+
+            .location {
+                font-size: 12px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .stat {
+                padding: 13px 3px;
+            }
+
+            .stat strong {
+                font-size: 18px;
+            }
+
+            .stat span {
+                font-size: 9px;
+            }
+
+            .description h2 {
+                font-size: 18px;
+            }
+
+            .description p {
+                font-size: 13px;
+            }
+
+            .price strong {
+                font-size: 21px;
+            }
+
+            .booking-panel {
+                padding: 14px;
+            }
+
+            .calendar-days,
+            .calendar-week {
+                gap: 3px;
+            }
+
+            .day {
+                min-height: 40px;
+                font-size: 11px;
+            }
+
+            .calendar-week span {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .nav a {
+                font-size: 10px;
+            }
+
+            .main-image {
+                height: 235px;
+            }
+
+            .gallery-thumb {
+                flex-basis: 70px;
+                width: 70px;
+                height: 56px;
+            }
+
+            .property-info {
+                padding: 14px;
+            }
+
+            .stat strong {
+                font-size: 16px;
+            }
+
+            .stat span {
+                font-size: 8px;
+            }
+
+            .day {
+                min-height: 36px;
+                font-size: 10px;
+            }
+
+            .calendar-week span {
+                font-size: 8px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <a href="/" class="logo">smsar_egy</a>
+        <nav class="nav">
+            <a href="/">الرئيسية</a>
+            <a href="/properties/?type=sale">للبيع</a>
+            <a href="/properties/?type=rent">للإيجار</a>
+        </nav>
+    </header>
+
+    <!-- PROPERTY -->
+    <main class="detail-page">
+        <a href="/properties/" class="back-link">← رجوع للعقارات</a>
+
+        <div class="property-main-card">
+            <!-- GALLERY -->
+            <div class="gallery">
+                <div class="main-image">
+                    {% if property.image %}
+                        <img id="mainPropertyImage" src="{{ property.image.url }}" alt="{{ property.title }}">
+                    {% elif property.images.all %}
+                        {% with first_image=property.images.all.0 %}
+                            <img id="mainPropertyImage" src="{{ first_image.image.url }}" alt="{{ property.title }}">
+                        {% endwith %}
+                    {% else %}
+                        <div class="main-no-image">لا توجد صورة</div>
+                    {% endif %}
+
+                    <span class="property-status">
+                        {% if property.property_type == 'sale' %}
+                            للبيع
+                        {% else %}
+                            للإيجار
+                        {% endif %}
+                    </span>
+                </div>
+
+                {% if property.image or property.images.all %}
+                <div class="gallery-thumbnails">
+                    {% if property.image %}
+                        <img src="{{ property.image.url }}" class="gallery-thumb active" onclick="changePropertyImage(this)" alt="{{ property.title }}" draggable="false">
+                    {% endif %}
+
+                    {% for gallery_image in property.images.all %}
+                        <img src="{{ gallery_image.image.url }}" class="gallery-thumb" onclick="changePropertyImage(this)" alt="{{ property.title }}" draggable="false">
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- INFO -->
+            <div class="property-info">
+                <h1>{{ property.title }}</h1>
+                <div class="location">📍 {{ property.get_location_display }}</div>
+
+                <!-- STATS -->
+                <div class="stats">
+                    <div class="stat">
+                        <strong>{{ property.area }}</strong>
+                        <span>متر مربع</span>
+                    </div>
+                    <div class="stat">
+                        <strong>{{ property.bedrooms }}</strong>
+                        <span>غرف</span>
+                    </div>
+                    <div class="stat">
+                        <strong>{{ property.bathrooms }}</strong>
+                        <span>حمام</span>
+                    </div>
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="description">
+                    <h2>عن العقار</h2>
+                    <p>{{ property.description }}</p>
+                </div>
+
+                <!-- PRICE -->
+                <div class="price">
+                    <span>السعر</span>
+                    <strong>{{ property.price }} جنيه</strong>
+                </div>
+
+                <!-- BOOKING BUTTON -->
+                <button type="button" class="booking-open" id="openBooking">📅احجز موعد</button>
+
+                <!-- BOOKING PANEL -->
+                <div class="booking-panel" id="bookingPanel">
+                    <div class="booking-title">اختار اليوم المناسب</div>
+
+                    <!-- CALENDAR HEADER -->
+                    <div class="calendar-header">
+                        <button type="button" id="prevMonth">‹</button>
+                        <strong id="monthTitle"></strong>
+                        <button type="button" id="nextMonth">›</button>
+                    </div>
+
+                    <!-- WEEK -->
+                    <div class="calendar-week">
+                        <span>أحد</span>
+                        <span>اثنين</span>
+                        <span>ثلاثاء</span>
+                        <span>أربعاء</span>
+                        <span>خميس</span>
+                        <span>جمعة</span>
+                        <span>سبت</span>
+                    </div>
+
+                    <!-- DAYS -->
+                    <div class="calendar-days" id="calendarDays"></div>
+
+                    <!-- SELECTED DATE -->
+                    <div class="selected-date" id="selectedDate">اختار يوم من التقويم</div>
+
+                    <!-- CONFIRM -->
+                    <button type="button" class="confirm-booking" id="confirmBooking" disabled>تأكيد الموعد</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">smsar_egy</div>
+        <p>عقارات مصر بطريقة مختلفة.</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        /* IMAGE GALLERY */
+        function changePropertyImage(element) {
+            const mainImage = document.getElementById("mainPropertyImage");
+            if (!mainImage) return;
+
+            mainImage.src = element.src;
+
+            document.querySelectorAll(".gallery-thumb").forEach(function (image) {
+                image.classList.remove("active");
+            });
+
+            element.classList.add("active");
+        }
+
+        /* CALENDAR */
+        document.addEventListener("DOMContentLoaded", function () {
+            const openBooking = document.getElementById("openBooking");
+            const bookingPanel = document.getElementById("bookingPanel");
+            const calendarDays = document.getElementById("calendarDays");
+            const monthTitle = document.getElementById("monthTitle");
+            const selectedDateBox = document.getElementById("selectedDate");
+            const confirmBooking = document.getElementById("confirmBooking");
+            const prevMonth = document.getElementById("prevMonth");
+            const nextMonth = document.getElementById("nextMonth");
+
+            let currentDate = new Date();
+            currentDate.setDate(1);
+            let selectedDate = null;
+
+            const months = [
+                "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+                "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+            ];
+
+            /* ADMIN DATES */
+            const propertyDates = [
+                {% for item in dates %}
+                {
+                    date: "{{ item.date|date:'Y-m-d' }}",
+                    available: {{ item.available|yesno:"true,false" }}
+                }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
+
+            const datesMap = new Map();
+            propertyDates.forEach(function (item) {
+                datesMap.set(item.date, item.available);
+            });
+
+            /* OPEN BOOKING */
+            if (openBooking) {
+                openBooking.addEventListener("click", function () {
+                    bookingPanel.classList.toggle("active");
+                    if (bookingPanel.classList.contains("active")) {
+                        renderCalendar();
+                    }
+                });
+            }
+
+            /* RENDER CALENDAR */
+            function renderCalendar() {
+                if (!calendarDays) return;
+                calendarDays.innerHTML = "";
+
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+
+                monthTitle.textContent = months[month] + " " + year;
+
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                /* EMPTY CELLS */
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement("div");
+                    emptyDay.className = "day empty";
+                    calendarDays.appendChild(emptyDay);
+                }
+
+                /* CREATE DAYS */
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayButton = document.createElement("button");
+                    dayButton.type = "button";
+                    dayButton.className = "day";
+                    dayButton.textContent = day;
+
+                    const dateString = year + "-" + String(month + 1).padStart(2, "0") + "-" + String(day).padStart(2, "0");
+
+                    /* ADMIN AVAILABILITY ONLY */
+                    if (datesMap.has(dateString)) {
+                        const available = datesMap.get(dateString);
+                        if (available === false) {
+                            dayButton.classList.add("disabled");
+                            dayButton.disabled = true;
+                        }
+                    }
+
+                    /* SELECTED */
+                    if (selectedDate === dateString) {
+                        dayButton.classList.add("selected");
+                    }
+
+                    /* CLICK */
+                    dayButton.addEventListener("click", function () {
+                        if (dayButton.disabled) return;
+
+                        selectedDate = dateString;
+                        selectedDateBox.innerHTML = "الموعد المختار: " + "<strong>" + day + " " + months[month] + " " + year + "</strong>";
+                        confirmBooking.disabled = false;
+                        renderCalendar();
+                    });
+
+                    calendarDays.appendChild(dayButton);
+                }
+            }
+
+            /* PREVIOUS MONTH */
+            if (prevMonth) {
+                prevMonth.addEventListener("click", function () {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    renderCalendar();
+                });
+            }
+
+            /* NEXT MONTH */
+            if (nextMonth) {
+                nextMonth.addEventListener("click", function () {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    renderCalendar();
+                });
+            }
+
+            /* CONFIRM */
+            if (confirmBooking) {
+                confirmBooking.addEventListener("click", function () {
+                    if (!selectedDate) return;
+                    window.location.href = "{% url 'booking' property.pk %}" + "?date=" + encodeURIComponent(selectedDate);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

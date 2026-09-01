@@ -1,0 +1,758 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>حجز موعد | smsar_egy</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0b0b0b;
+            --dark: #111111;
+            --yellow: #D4A72C;
+            --white: #ffffff;
+            --gray: #999999;
+            --border: #292929;
+            --red: #e53935;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: var(--black);
+
+            color: white;
+
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* NAVBAR */
+
+        .navbar {
+
+            height: 70px;
+
+            background: #000;
+
+            border-bottom: 1px solid var(--yellow);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 6%;
+        }
+
+        .logo {
+
+            color: var(--yellow);
+
+            font-size: 27px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+        }
+
+        .nav {
+
+            display: flex;
+
+            gap: 20px;
+        }
+
+        .nav a {
+
+            color: var(--yellow);
+
+            font-size: 13px;
+        }
+
+
+        /* PAGE */
+
+        .booking-page {
+
+            width: 92%;
+
+            max-width: 650px;
+
+            margin: auto;
+
+            padding: 35px 0 70px;
+        }
+
+
+        .back {
+
+            color: var(--yellow);
+
+            font-size: 13px;
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+        }
+
+
+        .booking-card {
+
+            background: var(--dark);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        /* PROPERTY */
+
+        .property-preview {
+
+            padding: 18px;
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .property-preview img {
+
+            width: 90px;
+
+            height: 75px;
+
+            object-fit: cover;
+
+            border-radius: 5px;
+        }
+
+        .property-preview h2 {
+
+            color: var(--yellow);
+
+            font-size: 18px;
+
+            margin-bottom: 7px;
+        }
+
+        .property-preview p {
+
+            color: #aaa;
+
+            font-size: 12px;
+        }
+
+
+        /* CONTENT */
+
+        .booking-content {
+
+            padding: 22px;
+        }
+
+        .booking-title {
+
+            color: var(--yellow);
+
+            font-size: 25px;
+
+            margin-bottom: 7px;
+        }
+
+        .booking-subtitle {
+
+            color: #999;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* MESSAGES */
+
+        .message {
+
+            background: #251010;
+
+            border: 1px solid var(--red);
+
+            color: #ff7777;
+
+            padding: 12px;
+
+            border-radius: 5px;
+
+            margin-bottom: 18px;
+
+            font-size: 13px;
+        }
+
+
+        /* FORM */
+
+        .form-group {
+
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+
+            display: block;
+
+            color: #ddd;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+        .required {
+
+            color: var(--yellow);
+        }
+
+        .form-group input {
+
+            width: 100%;
+
+            height: 50px;
+
+            background: #080808;
+
+            border: 1px solid var(--border);
+
+            border-radius: 5px;
+
+            color: white;
+
+            padding: 0 14px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .form-group input:focus {
+
+            border-color: var(--yellow);
+        }
+
+
+        /* TWO INPUTS */
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+        }
+
+
+        /* ID CARD */
+
+        .file-box {
+
+            border: 1px dashed var(--yellow);
+
+            background: #080808;
+
+            border-radius: 5px;
+
+            padding: 18px;
+
+            text-align: center;
+        }
+
+        .file-box p {
+
+            color: #aaa;
+
+            font-size: 12px;
+
+            margin-bottom: 12px;
+        }
+
+        .file-box input {
+
+            height: auto;
+
+            padding: 8px;
+
+            border: none;
+
+            background: transparent;
+        }
+
+
+        /* DATE */
+
+        .selected-date {
+
+            background: #080808;
+
+            border: 1px solid var(--yellow);
+
+            border-radius: 5px;
+
+            padding: 14px;
+
+            margin-bottom: 18px;
+
+            color: #ccc;
+
+            font-size: 13px;
+        }
+
+        .selected-date strong {
+
+            color: var(--yellow);
+        }
+
+
+        /* BUTTON */
+
+        .submit-btn {
+
+            width: 100%;
+
+            height: 53px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background: var(--yellow);
+
+            color: #000;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .submit-btn:hover {
+
+            background: white;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+
+            background: #000;
+
+            border-top: 1px solid var(--yellow);
+
+            text-align: center;
+
+            padding: 40px 20px;
+        }
+
+        .footer-logo {
+
+            color: var(--yellow);
+
+            font-size: 25px;
+
+            font-weight: bold;
+        }
+
+        footer p {
+
+            color: #888;
+
+            margin-top: 8px;
+
+            font-size: 12px;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                padding: 0 18px;
+            }
+
+            .nav {
+
+                gap: 10px;
+            }
+
+            .nav a {
+
+                font-size: 11px;
+            }
+
+            .booking-page {
+
+                width: 94%;
+
+                padding-top: 25px;
+            }
+
+            .booking-content {
+
+                padding: 18px;
+            }
+
+            .booking-title {
+
+                font-size: 22px;
+            }
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+            }
+
+            .property-preview img {
+
+                width: 80px;
+
+                height: 65px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <a href="/" class="logo">
+        smsar_egy
+    </a>
+
+    <nav class="nav">
+
+        <a href="/">
+            الرئيسية
+        </a>
+
+        <a href="/properties/?type=sale">
+            للبيع
+        </a>
+
+        <a href="/properties/?type=rent">
+            للإيجار
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="booking-page">
+
+
+    <a
+        href="{% url 'property_detail' property.pk %}"
+        class="back">
+
+        ← رجوع للعقار
+
+    </a>
+
+
+    <div class="booking-card">
+
+
+        <!-- PROPERTY -->
+
+        <div class="property-preview">
+
+            {% if property.image %}
+
+                <img
+                    src="{{ property.image.url }}"
+                    alt="{{ property.title }}"
+                >
+
+            {% endif %}
+
+
+            <div>
+
+                <h2>
+                    {{ property.title }}
+                </h2>
+
+                <p>
+                    📍 {{ property.location }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="booking-content">
+
+
+            <h1 class="booking-title">
+                احجز موعد
+            </h1>
+
+            <p class="booking-subtitle">
+                اكتب بياناتك عشان نقدر نتواصل معاك ونأكد الموعد.
+            </p>
+
+
+
+            <!-- ERRORS -->
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        الاسم بالكامل
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        placeholder="اكتب اسمك بالكامل"
+                        required>
+
+                </div>
+
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+                        رقم الموبايل
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="01xxxxxxxxx"
+                        required>
+
+                </div>
+
+
+
+                <!-- GUESTS -->
+
+                <div class="form-group">
+
+                    <label>
+                        عدد الأفراد
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        name="guests_count"
+                        min="1"
+                        max="{{ property.guests }}"
+                        value="1"
+                        required>
+
+                </div>
+
+
+
+                <!-- DATE -->
+
+                <div class="form-group">
+
+                    <label>
+                        الموعد المختار
+                        <span class="required">*</span>
+                    </label>
+
+
+                    <div class="selected-date">
+
+                        {% if selected_date %}
+
+                            التاريخ المختار:
+
+                            <strong>
+                                {{ selected_date }}
+                            </strong>
+
+                        {% else %}
+
+                            لم يتم اختيار تاريخ.
+
+                            <br>
+
+                            ارجع للعقار واختار موعد أولًا.
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <input
+                        type="hidden"
+                        name="booking_date"
+                        value="{{ selected_date }}"
+                        required>
+
+                </div>
+
+
+
+                <!-- TIME -->
+
+                <div class="form-group">
+
+                    <label>
+                        اختار الساعة
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="time"
+                        name="booking_time"
+                        required>
+
+                </div>
+
+
+
+                <!-- ID -->
+
+                <div class="form-group">
+
+                    <label>
+                        صورة البطاقة
+                        <span class="required">*</span>
+                    </label>
+
+
+                    <div class="file-box">
+
+                        <p>
+                            ارفع صورة واضحة للبطاقة
+                        </p>
+
+                        <input
+                            type="file"
+                            name="id_card"
+                            accept="image/jpeg,image/png"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="submit-btn">
+
+                    تأكيد الحجز
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<footer>
+
+    <div class="footer-logo">
+        smsar_egy
+    </div>
+
+    <p>
+        عقارات مصر بطريقة مختلفة.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

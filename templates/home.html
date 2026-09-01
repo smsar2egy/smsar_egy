@@ -1,0 +1,2337 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+  <title>smsar_egy | عقارات مصر</title>
+
+<meta property="og:title"
+      content="smsar_egy | عقارات مصر">
+
+<meta property="og:description"
+      content="عقارات مصر بطريقة مختلفة.">
+
+{% static 'images/gom3a-preview.jpg' as og_image %}
+
+<meta property="og:image"
+      content="{% static 'images/gom3a-preview.jpg' %}">
+
+<meta property="og:type"
+      content="website">
+
+
+<style>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        :root {
+
+            --black: #090909;
+            --black-light: #111111;
+            --black-card: #151515;
+
+            --yellow: #D4A72C;
+
+            --white: #ffffff;
+
+            --gray: #a7a7a7;
+
+            --border: #292929;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                var(--black);
+
+            color:
+                var(--white);
+
+            overflow-x: hidden;
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+        }
+
+
+        button {
+
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            width: 100%;
+
+            height: 72px;
+
+            background: #000;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            border-bottom:
+                1px solid var(--yellow);
+
+            position: relative;
+
+            z-index: 1000;
+        }
+
+
+        .logo {
+
+            color: var(--yellow);
+
+            font-size: 27px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+        }
+
+
+        .nav {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        .nav a {
+
+            color: var(--yellow);
+
+            font-size: 16px;
+
+            transition: .25s;
+        }
+
+
+        .nav a:hover {
+
+            color: white;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            width: 100%;
+
+            min-height: 500px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 55px 20px;
+
+            background:
+
+                linear-gradient(
+                    rgba(0,0,0,.45),
+                    rgba(0,0,0,.82)
+                ),
+
+                url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=85");
+
+            background-size: cover;
+
+            background-position: center;
+        }
+
+
+        .hero-content {
+
+            width: 100%;
+
+            max-width: 1000px;
+        }
+
+
+        .hero-small {
+
+            display: block;
+
+            color: var(--yellow);
+
+            font-size: 11px;
+
+            letter-spacing: 5px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .hero h1 {
+
+            color: white;
+
+            font-size: 54px;
+
+            line-height: 1.2;
+
+            margin-bottom: 15px;
+        }
+
+
+        .hero p {
+
+            color: #eeeeee;
+
+            font-size: 16px;
+
+            margin-bottom: 32px;
+        }
+
+
+        /* =====================================================
+           SEARCH PANEL
+        ===================================================== */
+
+        .search-panel {
+
+            width: 100%;
+
+            background:
+                rgba(15,15,15,.97);
+
+            border:
+                1px solid var(--yellow);
+
+            border-radius: 10px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.55);
+        }
+
+
+        .search-title {
+
+            color: var(--yellow);
+
+            text-align: right;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            margin-bottom: 16px;
+        }
+
+
+        .search-options {
+
+            display: grid;
+
+            grid-template-columns:
+                1.2fr
+                1.2fr
+                1fr;
+
+            gap: 12px;
+        }
+
+
+        /* =====================================================
+           DROPDOWN
+        ===================================================== */
+
+        .dropdown {
+
+            position: relative;
+        }
+
+
+        .dropdown-button {
+
+            width: 100%;
+
+            height: 56px;
+
+            background: #000;
+
+            color: var(--yellow);
+
+            border:
+                1px solid var(--yellow);
+
+            border-radius: 6px;
+
+            padding: 0 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: .2s;
+        }
+
+
+        .dropdown-button:hover {
+
+            background:
+                var(--yellow);
+
+            color:
+                #000;
+        }
+
+
+        .selected-text {
+
+            overflow: hidden;
+
+            white-space: nowrap;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .arrow {
+
+            flex-shrink: 0;
+
+            margin-right: 10px;
+
+            font-size: 11px;
+        }
+
+
+        .dropdown-menu {
+
+            position: absolute;
+
+            top:
+                calc(100% + 6px);
+
+            right: 0;
+
+            width: 100%;
+
+            max-height: 280px;
+
+            overflow-y: auto;
+
+            background: #000;
+
+            border:
+                1px solid var(--yellow);
+
+            border-radius: 6px;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.65);
+
+            display: none;
+
+            z-index: 5000;
+        }
+
+
+        .dropdown.active
+        .dropdown-menu {
+
+            display: block;
+        }
+
+
+        .dropdown-option {
+
+            padding: 14px 16px;
+
+            color: var(--yellow);
+
+            font-size: 13px;
+
+            text-align: right;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+
+        .dropdown-option:hover {
+
+            background:
+                var(--yellow);
+
+            color:
+                #000;
+        }
+
+
+        /* =====================================================
+           SEARCH BUTTON
+        ===================================================== */
+
+        .search-button {
+
+            width: 100%;
+
+            height: 56px;
+
+            margin-top: 14px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background:
+                var(--yellow);
+
+            color: #000;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .25s;
+        }
+
+
+        .search-button:hover {
+
+            background: white;
+        }
+
+
+        /* =====================================================
+           PROPERTIES SECTION
+        ===================================================== */
+
+        .section {
+
+            width: 100%;
+
+            background:
+                var(--black);
+
+            padding: 75px 4%;
+        }
+
+
+        .section-title {
+
+            width: 100%;
+
+            max-width: 1250px;
+
+            margin:
+                0 auto 32px;
+        }
+
+
+        .section-title span {
+
+            display: block;
+
+            color:
+                var(--yellow);
+
+            font-size: 10px;
+
+            letter-spacing: 5px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .section-title h2 {
+
+            color:
+                var(--yellow);
+
+            font-size: 34px;
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           PROPERTIES GRID
+        ===================================================== */
+
+        .properties-slider {
+
+            width: 100%;
+
+            max-width: 1250px;
+
+            margin: auto;
+        }
+
+
+        .properties-track {
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 22px;
+        }
+
+
+        /* =====================================================
+           PROPERTY CARD
+        ===================================================== */
+
+        .property {
+
+            width: 100%;
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background:
+                var(--black-card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            direction: rtl;
+
+            transition:
+                transform .25s ease,
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
+
+
+        .property:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                var(--yellow);
+
+            box-shadow:
+                0 12px 30px rgba(212,167,44,.13);
+        }
+
+
+        /* =====================================================
+           IMAGE
+        ===================================================== */
+
+        .property-image {
+
+            width: 100%;
+
+            height: 270px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background: #222;
+        }
+
+
+        .property-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            object-position: center;
+
+            transition:
+                transform .4s ease;
+        }
+
+
+        .property:hover
+        .property-image img {
+
+            transform:
+                scale(1.035);
+        }
+
+
+        /* =====================================================
+           NO IMAGE
+        ===================================================== */
+
+        .no-image {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #222;
+
+            color:
+                var(--yellow);
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status {
+
+            position: absolute;
+
+            top: 13px;
+
+            right: 13px;
+
+            background:
+                var(--yellow);
+
+            color: #000;
+
+            padding: 8px 13px;
+
+            border-radius: 5px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            z-index: 5;
+        }
+
+
+        /* =====================================================
+           PROPERTY INFO
+        ===================================================== */
+
+        .property-info {
+
+            padding: 18px;
+
+            background:
+                var(--black-card);
+        }
+
+
+        .property-info h3 {
+
+            color:
+                var(--yellow);
+
+            font-size: 20px;
+
+            margin-bottom: 8px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .location {
+
+            color:
+                #eeeeee;
+
+            font-size: 13px;
+
+            margin-bottom: 14px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        /* =====================================================
+           DETAILS
+        ===================================================== */
+
+        .details {
+
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 9px;
+
+            padding: 13px 0;
+
+            border-top:
+                1px solid var(--border);
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .details span {
+
+            color:
+                #cfcfcf;
+
+            font-size: 11px;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           PRICE
+        ===================================================== */
+
+        .property-price {
+
+            color:
+                var(--yellow);
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            margin-top: 16px;
+        }
+
+
+        /* =====================================================
+           BOOKING
+        ===================================================== */
+
+        .booking-btn {
+
+            width: 100%;
+
+            min-height: 45px;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                var(--yellow);
+
+            color: #000;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: .25s;
+        }
+
+
+        .booking-btn:hover {
+
+            background: white;
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-properties {
+
+            width: 100%;
+
+            padding: 70px 20px;
+
+            text-align: center;
+
+            background:
+                var(--black-card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            grid-column:
+                1 / -1;
+        }
+
+
+        .empty-properties h3 {
+
+            color:
+                var(--yellow);
+
+            margin-bottom: 10px;
+        }
+
+
+        .empty-properties p {
+
+            color: #888;
+
+            font-size: 14px;
+        }
+
+
+       /* =====================================================
+   FOOTER
+===================================================== */
+
+.site-footer {
+
+    width: 100%;
+
+    background: #000;
+
+    border-top: 1px solid var(--yellow);
+
+    padding: 55px 6% 20px;
+
+}
+
+
+.footer-container {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        1.5fr
+        1fr
+        1fr;
+
+    gap: 50px;
+
+}
+
+
+.footer-brand {
+
+    text-align: right;
+
+}
+
+
+.footer-logo {
+
+    color: var(--yellow);
+
+    font-size: 32px;
+
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.footer-brand p {
+
+    color: #999;
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
+}
+
+
+/* COLUMNS */
+
+.footer-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+
+.footer-column h3 {
+
+    color: var(--yellow);
+
+    font-size: 17px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.footer-column a {
+
+    color: #bbb;
+
+    font-size: 13px;
+
+    transition: .2s;
+
+}
+
+
+.footer-column a:hover {
+
+    color: var(--yellow);
+
+    transform: translateX(-3px);
+
+}
+
+
+/* BOTTOM */
+
+.footer-bottom {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: 45px auto 0;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #222;
+
+    text-align: center;
+
+}
+
+
+.footer-bottom span {
+
+    color: #666;
+
+    font-size: 11px;
+
+}
+
+
+/* =====================================================
+   MOBILE FOOTER
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .site-footer {
+
+        padding: 40px 20px 18px;
+
+    }
+
+
+    .footer-container {
+
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+
+    }
+
+
+    .footer-brand {
+
+        text-align: center;
+
+    }
+
+
+    .footer-column {
+
+        align-items: center;
+
+        text-align: center;
+
+    }
+
+
+    .footer-logo {
+
+        font-size: 28px;
+
+    }
+
+
+    .footer-bottom {
+
+        margin-top: 30px;
+
+    }
+
+}
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .properties-track {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 18px;
+            }
+
+
+            .property-image {
+
+                height: 245px;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+
+                height: 64px;
+
+                padding: 0 17px;
+            }
+
+
+            .logo {
+
+                font-size: 23px;
+            }
+
+
+            .nav {
+
+                gap: 12px;
+            }
+
+
+            .nav a {
+
+                font-size: 13px;
+            }
+
+
+            /* HERO */
+
+            .hero {
+
+                min-height: 0;
+
+                padding:
+                    42px 0 38px;
+            }
+
+
+            .hero-content {
+
+                width: 92%;
+            }
+
+
+            .hero-small {
+
+                font-size: 9px;
+
+                letter-spacing: 3px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 34px;
+
+                margin:
+                    15px 0 10px;
+            }
+
+
+            .hero p {
+
+                font-size: 13px;
+
+                margin-bottom: 24px;
+            }
+
+
+            /* SEARCH */
+
+            .search-panel {
+
+                padding: 15px;
+
+                border-radius: 8px;
+            }
+
+
+            .search-title {
+
+                font-size: 15px;
+
+                margin-bottom: 13px;
+            }
+
+
+            .search-options {
+
+                grid-template-columns: 1fr;
+
+                gap: 9px;
+            }
+
+
+            .dropdown-button {
+
+                height: 51px;
+            }
+
+
+            .search-button {
+
+                height: 51px;
+            }
+
+
+            /* SECTION */
+
+            .section {
+
+                padding:
+                    45px 10px;
+            }
+
+
+            .section-title {
+
+                margin-bottom: 22px;
+            }
+
+
+            .section-title span {
+
+                font-size: 8px;
+
+                letter-spacing: 3px;
+            }
+
+
+            .section-title h2 {
+
+                font-size: 27px;
+            }
+
+
+            /* MOBILE 3 CARDS */
+
+            .properties-slider {
+
+                width: 100%;
+
+                max-width: 100%;
+
+                overflow: visible;
+            }
+
+
+            .properties-track {
+
+                width: 100%;
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+
+                gap: 9px;
+            }
+
+
+            .property {
+
+                width: 100%;
+
+                min-width: 0;
+
+                border-radius: 7px;
+            }
+
+
+            .property-image {
+
+                width: 100%;
+
+                height: 105px;
+            }
+
+
+            .status {
+
+                top: 5px;
+
+                right: 5px;
+
+                padding:
+                    4px 5px;
+
+                border-radius: 3px;
+
+                font-size: 7px;
+            }
+
+
+            .property-info {
+
+                padding: 8px;
+            }
+
+
+            .property-info h3 {
+
+                font-size: 12px;
+
+                margin-bottom: 5px;
+            }
+
+
+            .location {
+
+                font-size: 8px;
+
+                margin-bottom: 6px;
+            }
+
+
+            .details {
+
+                gap: 3px;
+
+                padding: 6px 0;
+            }
+
+
+            .details span {
+
+                font-size: 7px;
+            }
+
+
+            .property-price {
+
+                font-size: 11px;
+
+                margin-top: 7px;
+            }
+
+
+            .booking-btn {
+
+                min-height: 30px;
+
+                margin-top: 7px;
+
+                padding: 5px 3px;
+
+                border-radius: 4px;
+
+                font-size: 8px;
+            }
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 480px) {
+
+            .hero h1 {
+
+                font-size: 29px;
+            }
+
+
+            .section {
+
+                padding-left: 8px;
+
+                padding-right: 8px;
+            }
+
+
+            .properties-track {
+
+                gap: 7px;
+            }
+
+
+            .property-image {
+
+                height: 95px;
+            }
+
+
+            .property-info {
+
+                padding: 7px;
+            }
+
+
+            .property-info h3 {
+
+                font-size: 11px;
+            }
+
+
+            .location {
+
+                font-size: 7px;
+            }
+
+
+            .details span {
+
+                font-size: 6.5px;
+            }
+
+
+            .property-price {
+
+                font-size: 10px;
+            }
+
+
+            .booking-btn {
+
+                font-size: 7px;
+
+                min-height: 28px;
+            }
+        }
+
+
+        /* =====================================================
+           REDUCE MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+
+                scroll-behavior: auto;
+            }
+
+
+            * {
+
+                transition:
+                    none !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <a
+        href="{% url 'home' %}"
+        class="logo"
+    >
+        smsar_egy
+    </a>
+
+
+    <nav class="nav">
+
+        <a href="{% url 'home' %}">
+            الرئيسية
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+
+        <span class="hero-small">
+smsar_egy        </span>
+
+
+        <h1>
+            هتلاقي عقارك المناسب
+        </h1>
+
+
+        <p>
+            اختار المكان ونوع العقار وطريقة التعامل
+        </p>
+
+
+
+        <!-- =================================================
+             SEARCH FORM
+        ================================================= -->
+
+        <form
+            class="search-panel"
+            method="GET"
+            action="{% url 'property_list' %}"
+            id="propertySearchForm"
+        >
+
+
+            <div class="search-title">
+                ابحث عن العقار
+            </div>
+
+
+
+            <div class="search-options">
+
+
+                <!-- =========================================
+                     LOCATION
+                ========================================== -->
+
+                <div class="dropdown">
+
+
+                    <button
+                        type="button"
+                        class="dropdown-button"
+                    >
+
+                        <span class="selected-text">
+                            📍 اختار العنوان
+                        </span>
+
+
+                        <span class="arrow">
+                            ▼
+                        </span>
+
+                    </button>
+
+
+
+                    <input
+                        type="hidden"
+                        name="location"
+                        id="locationInput"
+                        value=""
+                    >
+
+
+
+                    <div class="dropdown-menu">
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="cairo"
+                        >
+                            القاهرة
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="giza"
+                        >
+                            الجيزة
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="north_coast"
+                        >
+                            الساحل الشمالي
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="hurghada"
+                        >
+                            الغردقة
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="dahab"
+                        >
+                            دهب
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="sharm"
+                        >
+                            شرم الشيخ
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="ain_sokhna"
+                        >
+                            العين السخنة
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     PROPERTY CATEGORY
+                ========================================== -->
+
+                <div class="dropdown">
+
+
+                    <button
+                        type="button"
+                        class="dropdown-button"
+                    >
+
+                        <span class="selected-text">
+                            🏠 نوع العقار
+                        </span>
+
+
+                        <span class="arrow">
+                            ▼
+                        </span>
+
+                    </button>
+
+
+
+                    <input
+                        type="hidden"
+                        name="category"
+                        id="categoryInput"
+                        value=""
+                    >
+
+
+
+                    <div class="dropdown-menu">
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="apartment"
+                        >
+                            شقق
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="villa"
+                        >
+                            فلل
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="chalet"
+                        >
+                            شاليهات
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="summer"
+                        >
+                            مصايف
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="property"
+                        >
+                            عقارات
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="land"
+                        >
+                            أراضي
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="commercial"
+                        >
+                            تجاري
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     SALE / RENT
+                ========================================== -->
+
+                <div class="dropdown">
+
+
+                    <button
+                        type="button"
+                        class="dropdown-button"
+                    >
+
+                        <span class="selected-text">
+                            💰 بيع أو إيجار
+                        </span>
+
+
+                        <span class="arrow">
+                            ▼
+                        </span>
+
+                    </button>
+
+
+
+                    <input
+                        type="hidden"
+                        name="type"
+                        id="typeInput"
+                        value=""
+                    >
+
+
+
+                    <div class="dropdown-menu">
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="sale"
+                        >
+                            للبيع
+                        </div>
+
+
+                        <div
+                            class="dropdown-option"
+                            data-value="rent"
+                        >
+                            للإيجار
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 SEARCH BUTTON
+            ============================================== -->
+
+            <button
+                type="submit"
+                class="search-button"
+            >
+
+                🔎 ابحث عن العقار
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PROPERTIES
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+
+        <span>
+            FEATURED PROPERTIES
+        </span>
+
+
+        <h2>
+            أحدث العقارات
+        </h2>
+
+
+    </div>
+
+
+
+    <div
+        class="properties-slider"
+        id="propertiesSlider"
+    >
+
+
+        <div
+            class="properties-track"
+            id="propertiesTrack"
+        >
+
+
+
+            {% for property in properties %}
+
+
+                <!-- =====================================
+                     PROPERTY CARD
+                ====================================== -->
+
+                <div class="property">
+
+
+                    <!-- IMAGE -->
+
+                    <a
+                        href="{% url 'property_detail' property.pk %}"
+                    >
+
+                        <div class="property-image">
+
+
+                            {% if property.image %}
+
+
+                                <img
+                                    src="{{ property.image.url }}"
+                                    alt="{{ property.title }}"
+                                    loading="lazy"
+                                >
+
+
+                            {% else %}
+
+
+                                <div class="no-image">
+
+                                    لا توجد صورة
+
+                                </div>
+
+
+                            {% endif %}
+
+
+
+                            <span class="status">
+
+
+                                {% if property.property_type == 'sale' %}
+
+                                    للبيع
+
+                                {% else %}
+
+                                    للإيجار
+
+                                {% endif %}
+
+
+                            </span>
+
+
+                        </div>
+
+                    </a>
+
+
+
+                    <!-- INFO -->
+
+                    <div class="property-info">
+
+
+                        <h3>
+
+                            {{ property.title }}
+
+                        </h3>
+
+
+
+                        <div class="location">
+
+                            📍 {{ property.location }}
+
+                        </div>
+
+
+
+                        <div class="details">
+
+
+                            <span>
+
+                                🛏
+                                {{ property.bedrooms }}
+                                غرف
+
+                            </span>
+
+
+                            <span>
+
+                                🚿
+                                {{ property.bathrooms }}
+                                حمام
+
+                            </span>
+
+
+                            <span>
+
+                                📐
+                                {{ property.area }}
+                                م²
+
+                            </span>
+
+
+                        </div>
+
+
+
+                        <div class="property-price">
+
+                            {{ property.price }}
+                            جنيه
+
+                        </div>
+
+
+
+                        <a
+                            href="{% url 'property_detail' property.pk %}"
+                            class="booking-btn"
+                        >
+
+                            احجز موعد
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% empty %}
+
+
+                <!-- =====================================
+                     EMPTY
+                ====================================== -->
+
+                <div class="empty-properties">
+
+
+                    <h3>
+
+                        لا توجد عقارات مضافة حاليًا
+
+                    </h3>
+
+
+                    <p>
+
+                        أضف عقارًا من لوحة الإدارة
+                        وسيظهر هنا تلقائيًا.
+
+                    </p>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<<!-- =====================================================
+     CONTACT + FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+                smsar_egy
+            </div>
+
+            <p>
+                منصتك للعقارات في مصر
+                <br>
+                عقارات مصر بطريقة مختلفة.
+            </p>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-column">
+
+            <h3>
+                تواصل معنا
+            </h3>
+
+            <a href="tel:01099245212">
+                📞 01099245212
+            </a>
+
+            <a href="mailto:gomaa600@icloud.com">
+                ✉️ gomaa600@icloud.com
+            </a>
+
+            <a
+                href="https://wa.me/201099245212"
+                target="_blank"
+                rel="noopener">
+                💬 واتساب
+            </a>
+
+        </div>
+
+
+        <!-- SOCIAL -->
+
+        <div class="footer-column">
+
+            <h3>
+                تابعنا
+            </h3>
+
+            <a
+                href="https://www.instagram.com/gomaa036?igsi=MWV0OXFtN25vaHpxcw%3D%3D&utm_source=qr"
+                target="_blank"
+                rel="noopener">
+                📸 Instagram
+            </a>
+
+            <a
+                href="https://www.facebook.com/share/1J6hG3pBP8/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener">
+                📘 Facebook
+            </a>
+
+            <a
+                href="https://www.tiktok.com/@mohamed_gomaa036?_r=1&_t=ZS-99FXBOmNcvd"
+                target="_blank"
+                rel="noopener">
+                🎵 TikTok
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 smsar_egy — جميع الحقوق محفوظة
+        </span>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /*
+         * جميع القوائم
+         */
+
+        const dropdowns =
+            document.querySelectorAll(
+                ".dropdown"
+            );
+
+
+
+        /*
+         * تشغيل كل Dropdown
+         */
+
+        dropdowns.forEach(
+            function (dropdown) {
+
+
+                const button =
+                    dropdown.querySelector(
+                        ".dropdown-button"
+                    );
+
+
+                const selectedText =
+                    dropdown.querySelector(
+                        ".selected-text"
+                    );
+
+
+                const options =
+                    dropdown.querySelectorAll(
+                        ".dropdown-option"
+                    );
+
+
+                const input =
+                    dropdown.querySelector(
+                        "input[type='hidden']"
+                    );
+
+
+
+                /*
+                 * فتح القائمة
+                 */
+
+                button.addEventListener(
+                    "click",
+                    function (event) {
+
+
+                        event.stopPropagation();
+
+
+
+                        /*
+                         * اقفل باقي القوائم
+                         */
+
+                        dropdowns.forEach(
+                            function (other) {
+
+
+                                if (
+                                    other !== dropdown
+                                ) {
+
+                                    other.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+
+                            }
+                        );
+
+
+
+                        /*
+                         * افتح / اقفل الحالية
+                         */
+
+                        dropdown.classList.toggle(
+                            "active"
+                        );
+
+
+                    }
+                );
+
+
+
+                /*
+                 * اختيار العنصر
+                 */
+
+                options.forEach(
+                    function (option) {
+
+
+                        option.addEventListener(
+                            "click",
+                            function (event) {
+
+
+                                event.stopPropagation();
+
+
+
+                                /*
+                                 * النص الظاهر
+                                 */
+
+                                const text =
+                                    option
+                                    .textContent
+                                    .trim();
+
+
+
+                                /*
+                                 * القيمة التي
+                                 * ستذهب إلى Django
+                                 */
+
+                                const value =
+                                    option
+                                    .dataset
+                                    .value;
+
+
+
+                                /*
+                                 * تغيير النص
+                                 */
+
+                                selectedText.textContent =
+                                    text;
+
+
+
+                                /*
+                                 * وضع القيمة
+                                 * داخل hidden input
+                                 */
+
+                                input.value =
+                                    value;
+
+
+
+                                /*
+                                 * قفل القائمة
+                                 */
+
+                                dropdown.classList.remove(
+                                    "active"
+                                );
+
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            }
+        );
+
+
+
+        /*
+         * قفل القوائم عند الضغط
+         * خارجها
+         */
+
+        document.addEventListener(
+            "click",
+            function () {
+
+
+                dropdowns.forEach(
+                    function (dropdown) {
+
+
+                        dropdown.classList.remove(
+                            "active"
+                        );
+
+
+                    }
+                );
+
+
+            }
+        );
+
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

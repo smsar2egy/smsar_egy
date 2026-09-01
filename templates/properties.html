@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>العقارات | smsar_egy</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #090909;
+            --card: #151515;
+            --yellow: #D4A72C;
+            --white: #fff;
+            --gray: #aaa;
+            --border: #292929;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--black);
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 72px;
+            background: #000;
+            border-bottom: 1px solid var(--yellow);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+        }
+
+        .logo {
+            color: var(--yellow);
+            font-size: 27px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .nav a {
+            color: var(--yellow);
+            font-size: 15px;
+        }
+
+        /* PAGE */
+
+        .page {
+            width: 100%;
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 45px 20px 70px;
+        }
+
+        .back {
+            color: var(--yellow);
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header span {
+            color: var(--yellow);
+            font-size: 10px;
+            letter-spacing: 4px;
+        }
+
+        .page-header h1 {
+            color: var(--yellow);
+            font-size: 34px;
+            margin-top: 8px;
+        }
+
+        .result-count {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* FILTER SUMMARY */
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+
+            margin-bottom: 30px;
+        }
+
+        .filter {
+            padding: 8px 13px;
+
+            background: #111;
+
+            border: 1px solid var(--border);
+
+            border-radius: 5px;
+
+            color: var(--yellow);
+
+            font-size: 12px;
+        }
+
+        /* GRID */
+
+        .properties-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 22px;
+        }
+
+        /* CARD */
+
+        .property {
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            transition: .25s;
+        }
+
+        .property:hover {
+
+            transform: translateY(-5px);
+
+            border-color: var(--yellow);
+
+            box-shadow:
+                0 12px 30px
+                rgba(212,167,44,.12);
+        }
+
+        /* IMAGE */
+
+        .property-image {
+
+            width: 100%;
+
+            height: 270px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background: #222;
+        }
+
+        .property-image img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition: .4s;
+        }
+
+        .property:hover
+        .property-image img {
+
+            transform: scale(1.04);
+        }
+
+        .status {
+
+            position: absolute;
+
+            top: 12px;
+            right: 12px;
+
+            background: var(--yellow);
+
+            color: #000;
+
+            padding: 7px 12px;
+
+            border-radius: 5px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+        }
+
+        .no-image {
+
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: var(--yellow);
+
+            background: #222;
+        }
+
+        /* INFO */
+
+        .property-info {
+
+            padding: 18px;
+        }
+
+        .property-info h2 {
+
+            color: var(--yellow);
+
+            font-size: 20px;
+
+            margin-bottom: 8px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+        .location {
+
+            color: #ddd;
+
+            font-size: 13px;
+
+            margin-bottom: 14px;
+        }
+
+        /* DETAILS */
+
+        .details {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            padding: 13px 0;
+
+            border-top:
+                1px solid var(--border);
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .details span {
+
+            color: #ccc;
+
+            font-size: 11px;
+        }
+
+        /* PRICE */
+
+        .price {
+
+            color: var(--yellow);
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            margin-top: 15px;
+        }
+
+        /* BUTTON */
+
+        .details-btn {
+
+            width: 100%;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: var(--yellow);
+
+            color: #000;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: .2s;
+        }
+
+        .details-btn:hover {
+            background: white;
+        }
+
+        /* EMPTY */
+
+        .empty {
+
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 80px 20px;
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+        }
+
+        .empty h2 {
+
+            color: var(--yellow);
+
+            margin-bottom: 12px;
+        }
+
+        .empty p {
+
+            color: var(--gray);
+
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+
+        footer {
+
+            background: #000;
+
+            border-top:
+                1px solid var(--yellow);
+
+            text-align: center;
+
+            padding: 45px 20px;
+        }
+
+        .footer-logo {
+
+            color: var(--yellow);
+
+            font-size: 27px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+        }
+
+        footer p {
+
+            color: #aaa;
+
+            margin-top: 10px;
+
+            font-size: 13px;
+        }
+
+        /* TABLET */
+
+        @media (max-width: 1000px) {
+
+            .properties-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                height: 64px;
+
+                padding: 0 17px;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .page {
+
+                padding:
+                    30px 10px 50px;
+            }
+
+            .page-header h1 {
+
+                font-size: 27px;
+            }
+
+            .properties-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 9px;
+            }
+
+            .property {
+
+                border-radius: 7px;
+            }
+
+            .property-image {
+
+                height: 125px;
+            }
+
+            .status {
+
+                top: 5px;
+                right: 5px;
+
+                padding: 4px 5px;
+
+                font-size: 7px;
+            }
+
+            .property-info {
+
+                padding: 8px;
+            }
+
+            .property-info h2 {
+
+                font-size: 12px;
+
+                margin-bottom: 5px;
+            }
+
+            .location {
+
+                font-size: 8px;
+
+                margin-bottom: 7px;
+            }
+
+            .details {
+
+                gap: 3px;
+
+                padding: 6px 0;
+            }
+
+            .details span {
+
+                font-size: 7px;
+            }
+
+            .price {
+
+                font-size: 11px;
+
+                margin-top: 7px;
+            }
+
+            .details-btn {
+
+                margin-top: 7px;
+
+                padding: 7px 3px;
+
+                font-size: 8px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .properties-grid {
+
+                gap: 7px;
+            }
+
+            .property-image {
+
+                height: 105px;
+            }
+
+            .property-info h2 {
+
+                font-size: 10px;
+            }
+
+            .location {
+
+                font-size: 7px;
+            }
+
+            .details span {
+
+                font-size: 6px;
+            }
+
+            .price {
+
+                font-size: 9px;
+            }
+
+            .details-btn {
+
+                font-size: 7px;
+
+                padding: 6px 2px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+    <a
+        href="{% url 'home' %}"
+        class="logo"
+    >
+        smsar_egy
+    </a>
+
+    <nav class="nav">
+
+        <a href="{% url 'home' %}">
+            الرئيسية
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- PAGE -->
+
+<main class="page">
+
+
+    <a
+        href="{% url 'home' %}"
+        class="back"
+    >
+        ← الرجوع للرئيسية
+    </a>
+
+
+
+    <div class="page-header">
+
+        <span>
+            SEARCH RESULTS
+        </span>
+
+        <h1>
+            العقارات
+        </h1>
+
+        <div class="result-count">
+
+            عدد النتائج:
+            {{ properties|length }}
+
+        </div>
+
+    </div>
+
+
+
+    <!-- FILTERS -->
+
+    <div class="filters">
+
+
+        {% if selected_location %}
+
+            <div class="filter">
+
+                📍
+
+                {% if selected_location == 'cairo' %}
+                    القاهرة
+                {% elif selected_location == 'giza' %}
+                    الجيزة
+                {% elif selected_location == 'north_coast' %}
+                    الساحل الشمالي
+                {% elif selected_location == 'hurghada' %}
+                    الغردقة
+                {% elif selected_location == 'dahab' %}
+                    دهب
+                {% elif selected_location == 'sharm' %}
+                    شرم الشيخ
+                {% elif selected_location == 'ain_sokhna' %}
+                    العين السخنة
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+
+
+        {% if selected_category %}
+
+            <div class="filter">
+
+                🏠
+
+                {% if selected_category == 'apartment' %}
+                    شقق
+                {% elif selected_category == 'villa' %}
+                    فلل
+                {% elif selected_category == 'chalet' %}
+                    شاليهات
+                {% elif selected_category == 'summer' %}
+                    مصايف
+                {% elif selected_category == 'property' %}
+                    عقارات
+                {% elif selected_category == 'land' %}
+                    أراضي
+                {% elif selected_category == 'commercial' %}
+                    تجاري
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+
+
+        {% if selected_type %}
+
+            <div class="filter">
+
+                💰
+
+                {% if selected_type == 'sale' %}
+                    للبيع
+                {% elif selected_type == 'rent' %}
+                    للإيجار
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+
+    <!-- PROPERTIES -->
+
+    <div class="properties-grid">
+
+
+        {% for property in properties %}
+
+
+            <div class="property">
+
+
+                <!-- IMAGE -->
+
+                <a
+                    href="{% url 'property_detail' property.pk %}"
+                >
+
+                    <div class="property-image">
+
+
+                        {% if property.image %}
+
+                            <img
+                                src="{{ property.image.url }}"
+                                alt="{{ property.title }}"
+                                loading="lazy"
+                            >
+
+                        {% else %}
+
+                            <div class="no-image">
+
+                                لا توجد صورة
+
+                            </div>
+
+                        {% endif %}
+
+
+
+                        <span class="status">
+
+                            {% if property.property_type == 'sale' %}
+
+                                للبيع
+
+                            {% else %}
+
+                                للإيجار
+
+                            {% endif %}
+
+                        </span>
+
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- INFO -->
+
+                <div class="property-info">
+
+
+                    <h2>
+
+                        {{ property.title }}
+
+                    </h2>
+
+
+                    <div class="location">
+
+                        📍 {{ property.location }}
+
+                    </div>
+
+
+                    <div class="details">
+
+
+                        <span>
+
+                            🛏
+                            {{ property.bedrooms }}
+                            غرف
+
+                        </span>
+
+
+                        <span>
+
+                            🚿
+                            {{ property.bathrooms }}
+                            حمام
+
+                        </span>
+
+
+                        <span>
+
+                            📐
+                            {{ property.area }}
+                            م²
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="price">
+
+                        {{ property.price }}
+                        جنيه
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'property_detail' property.pk %}"
+                        class="details-btn"
+                    >
+
+                        عرض العقار
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        {% empty %}
+
+
+            <div class="empty">
+
+                <h2>
+                    مفيش عقارات مطابقة للبحث
+                </h2>
+
+                <p>
+                    جرّب تختار مكان أو نوع عقار مختلف.
+                </p>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-logo">
+        smsar_egy
+    </div>
+
+    <p>
+        منصتك للعقارات في مصر
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

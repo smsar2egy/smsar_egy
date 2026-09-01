@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>تقويم {{ property.title }}</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+        }
+
+        .page {
+            max-width: 1000px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        .header {
+            background: #1b1b1b;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+        }
+
+        .header p {
+            color: #aaa;
+            margin: 0;
+        }
+
+        .calendar {
+            background: #1b1b1b;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .calendar-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-top button {
+            border: 0;
+            background: #d4af37;
+            color: #111;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #monthYear {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .weekdays,
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 7px;
+        }
+
+        .weekday {
+            text-align: center;
+            color: #aaa;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .day {
+            min-height: 70px;
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 10px;
+            position: relative;
+            transition: .2s;
+        }
+
+        .day:hover {
+            transform: translateY(-2px);
+            border-color: #d4af37;
+        }
+
+        .day-number {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .available {
+            border: 2px solid #28a745;
+        }
+
+        .booked {
+            border: 2px solid #e53935;
+            background: #351b1b;
+        }
+
+        .status {
+            position: absolute;
+            bottom: 7px;
+            right: 8px;
+            font-size: 11px;
+        }
+
+        .available .status {
+            color: #4ade80;
+        }
+
+        .booked .status {
+            color: #ff5252;
+        }
+
+        .empty {
+            min-height: 70px;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            color: #aaa;
+        }
+
+        .legend span {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .green {
+            background: #28a745;
+        }
+
+        .red {
+            background: #e53935;
+        }
+
+        /* popup */
+
+        .popup {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.7);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .popup-box {
+            width: 90%;
+            max-width: 400px;
+            background: #1b1b1b;
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .popup-box h2 {
+            margin-top: 0;
+        }
+
+        .popup-box button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 0;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .available-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .booked-btn {
+            background: #e53935;
+            color: white;
+        }
+
+        .close-btn {
+            background: #333;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+
+            .page {
+                padding: 12px;
+            }
+
+            .calendar {
+                padding: 10px;
+            }
+
+            .day {
+                min-height: 55px;
+                padding: 7px;
+            }
+
+            .status {
+                font-size: 9px;
+            }
+
+            .day-number {
+                font-size: 14px;
+            }
+
+            .weekday {
+                font-size: 11px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <div class="header">
+
+        <h1>
+            📅 {{ property.title }}
+        </h1>
+
+        <p>
+            إدارة مواعيد العقار
+        </p>
+
+    </div>
+
+
+    <div class="calendar">
+
+
+        <div class="calendar-top">
+
+            <button onclick="previousMonth()">
+                →
+            </button>
+
+            <div id="monthYear"></div>
+
+            <button onclick="nextMonth()">
+                ←
+            </button>
+
+        </div>
+
+
+        <div class="weekdays">
+
+            <div class="weekday">الأحد</div>
+            <div class="weekday">الإثنين</div>
+            <div class="weekday">الثلاثاء</div>
+            <div class="weekday">الأربعاء</div>
+            <div class="weekday">الخميس</div>
+            <div class="weekday">الجمعة</div>
+            <div class="weekday">السبت</div>
+
+        </div>
+
+
+        <div
+            id="days"
+            class="days">
+        </div>
+
+
+        <div class="legend">
+
+            <span>
+                <i class="dot green"></i>
+                متاح
+            </span>
+
+            <span>
+                <i class="dot red"></i>
+                محجوز
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- POPUP -->
+
+<div
+    id="popup"
+    class="popup">
+
+    <div class="popup-box">
+
+        <h2 id="selectedDate">
+            اليوم
+        </h2>
+
+        <button
+            class="available-btn"
+            onclick="setStatus('available')">
+
+            🟢 متاح
+
+        </button>
+
+
+        <button
+            class="booked-btn"
+            onclick="setStatus('booked')">
+
+            🔴 محجوز
+
+        </button>
+
+
+        <button
+            class="close-btn"
+            onclick="closePopup()">
+
+            إلغاء
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+const dates = {
+
+{% for item in dates %}
+
+    "{{ item.date|date:'Y-m-d' }}":
+        {{ item.available|yesno:"true,false" }},
+
+{% endfor %}
+
+};
+
+
+let currentDate = new Date();
+
+let selectedDate = null;
+
+
+const monthNames = [
+
+    "يناير",
+    "فبراير",
+    "مارس",
+    "أبريل",
+    "مايو",
+    "يونيو",
+    "يوليو",
+    "أغسطس",
+    "سبتمبر",
+    "أكتوبر",
+    "نوفمبر",
+    "ديسمبر"
+
+];
+
+
+function renderCalendar() {
+
+
+    const year =
+        currentDate.getFullYear();
+
+    const month =
+        currentDate.getMonth();
+
+
+    document.getElementById(
+        "monthYear"
+    ).innerText =
+        monthNames[month] + " " + year;
+
+
+    const daysContainer =
+        document.getElementById("days");
+
+
+    daysContainer.innerHTML = "";
+
+
+    const firstDay =
+        new Date(year, month, 1).getDay();
+
+
+    const daysInMonth =
+        new Date(year, month + 1, 0).getDate();
+
+
+    for (
+        let i = 0;
+        i < firstDay;
+        i++
+    ) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.className = "empty";
+
+        daysContainer.appendChild(empty);
+
+    }
+
+
+    for (
+        let day = 1;
+        day <= daysInMonth;
+        day++
+    ) {
+
+
+        const cell =
+            document.createElement("div");
+
+
+        cell.className = "day";
+
+
+        const dateString =
+            year +
+            "-" +
+            String(month + 1).padStart(2, "0") +
+            "-" +
+            String(day).padStart(2, "0");
+
+
+        const available =
+            dates[dateString];
+
+
+        if (available === false) {
+
+            cell.classList.add("booked");
+
+        }
+        else {
+
+            cell.classList.add("available");
+
+        }
+
+
+        cell.innerHTML = `
+
+            <div class="day-number">
+                ${day}
+            </div>
+
+            <div class="status">
+                ${
+                    available === false
+                    ? "محجوز"
+                    : "متاح"
+                }
+            </div>
+
+        `;
+
+
+        cell.onclick = function () {
+
+            openPopup(dateString);
+
+        };
+
+
+        daysContainer.appendChild(cell);
+
+    }
+
+}
+
+
+function previousMonth() {
+
+    currentDate.setMonth(
+        currentDate.getMonth() - 1
+    );
+
+    renderCalendar();
+
+}
+
+
+function nextMonth() {
+
+    currentDate.setMonth(
+        currentDate.getMonth() + 1
+    );
+
+    renderCalendar();
+
+}
+
+
+function openPopup(date) {
+
+    selectedDate = date;
+
+    document.getElementById(
+        "selectedDate"
+    ).innerText =
+        "📅 " + date;
+
+    document.getElementById(
+        "popup"
+    ).style.display = "flex";
+
+}
+
+
+function closePopup() {
+
+    document.getElementById(
+        "popup"
+    ).style.display = "none";
+
+}
+
+
+function setStatus(status) {
+
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "date",
+        selectedDate
+    );
+
+
+    formData.append(
+        "status",
+        status
+    );
+
+
+    fetch(
+        "{% url 'admin_calendar_update' property.id %}",
+        {
+            method: "POST",
+
+            headers: {
+                "X-CSRFToken":
+                    getCookie("csrftoken")
+            },
+
+            body: formData
+        }
+    )
+    .then(response => response.json())
+    .then(data => {
+
+        if (data.success) {
+
+            dates[selectedDate] =
+                data.available;
+
+            closePopup();
+
+            renderCalendar();
+
+        }
+
+    });
+
+}
+
+
+function getCookie(name) {
+
+    let cookieValue = null;
+
+    if (document.cookie &&
+        document.cookie !== "") {
+
+        const cookies =
+            document.cookie.split(";");
+
+        for (
+            let cookie of cookies
+        ) {
+
+            cookie = cookie.trim();
+
+            if (
+                cookie.substring(
+                    0,
+                    name.length + 1
+                ) ===
+                (name + "=")
+            ) {
+
+                cookieValue =
+                    decodeURIComponent(
+                        cookie.substring(
+                            name.length + 1
+                        )
+                    );
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    return cookieValue;
+
+}
+
+
+renderCalendar();
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,751 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block extrastyle %}
+
+<style>
+
+    body {
+        background: #000000;
+    }
+
+    .calendar-page {
+        direction: rtl;
+        max-width: 1400px;
+        margin: 25px auto;
+        padding: 0 20px;
+    }
+
+
+    /* ================================
+       HEADER
+    ================================= */
+
+    .property-header {
+
+        background: #ffc800;
+
+        color: rgb(0, 0, 0);
+
+        border-radius: 12px;
+
+        padding: 25px;
+
+        margin-bottom: 20px;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        gap: 20px;
+
+    }
+
+
+    .property-header h1 {
+
+        margin: 0;
+
+        color: #000000;
+
+        font-size: 28px;
+
+    }
+
+
+    .property-location {
+
+        margin-top: 8px;
+
+        color: #020101;
+
+        font-size: 14px;
+
+    }
+
+
+    .back-button {
+
+        background: #000000;
+
+        color: #ffaf03 !important;
+
+        padding: 11px 18px;
+
+        border-radius: 6px;
+
+        text-decoration: none;
+
+        font-weight: bold;
+
+        white-space: nowrap;
+
+    }
+
+
+    /* ================================
+       CALENDAR CARD
+    ================================= */
+
+    .calendar-card {
+
+        background: rgb(0, 0, 0);
+
+        border-radius: 12px;
+
+        padding: 25px;
+
+        box-shadow:
+            0 5px 25px rgb(245, 156, 1);
+
+    }
+
+
+    .calendar-top {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-bottom: 25px;
+
+        gap: 15px;
+
+    }
+
+
+    .calendar-title h2 {
+
+        margin: 0;
+
+        color: #ffa200;
+
+        font-size: 23px;
+
+    }
+
+
+    .calendar-title p {
+
+        margin: 7px 0 0;
+
+        color: #ffa200;
+
+    }
+
+
+    /* ================================
+       LEGEND
+    ================================= */
+
+    .legend {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 18px;
+
+        font-size: 13px;
+
+    }
+
+
+    .legend-item {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+    }
+
+
+    .dot {
+
+        width: 12px;
+
+        height: 12px;
+
+        border-radius: 50%;
+
+        display: inline-block;
+
+    }
+
+
+    .dot.available {
+
+        background: #22a447;
+
+    }
+
+
+    .dot.unavailable {
+
+        background: #e53935;
+
+    }
+
+
+    /* ================================
+       MONTH NAVIGATION
+    ================================= */
+
+    .month-navigation {
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .month-navigation a {
+
+        width: 42px;
+
+        height: 42px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border: 1px solid #ddd;
+
+        border-radius: 6px;
+
+        color: #faa200;
+
+        text-decoration: none;
+
+        font-size: 20px;
+
+        background: rgb(9, 8, 8);
+
+    }
+
+
+    .month-navigation a:hover {
+
+        background: #D4A72C;
+
+        border-color: #020202;
+
+    }
+
+
+    .month-name {
+
+        min-width: 180px;
+
+        text-align: center;
+
+        background: #111;
+
+        color: #D4A72C;
+
+        padding: 12px 20px;
+
+        border-radius: 6px;
+
+        font-size: 18px;
+
+        font-weight: bold;
+
+    }
+
+
+    /* ================================
+       TABLE
+    ================================= */
+
+    .dates-table {
+
+        width: 100%;
+
+        border-collapse: collapse;
+
+        overflow: hidden;
+
+        border: 1px solid #e5e5e5;
+
+        border-radius: 8px;
+
+    }
+
+
+    .dates-table th {
+
+        background: #000000;
+
+        color: #D4A72C;
+
+        padding: 15px;
+
+        text-align: right;
+
+        font-size: 14px;
+
+    }
+
+
+    .dates-table td {
+
+        padding: 14px 15px;
+
+        border-bottom: 1px solid #eee;
+
+        color: #ff8800;
+
+        font-size: 14px;
+
+    }
+
+
+    .dates-table tr:last-child td {
+
+        border-bottom: none;
+
+    }
+
+
+    .dates-table tr:hover {
+
+        background: #fafafa;
+
+    }
+
+
+    /* ================================
+       DATE
+    ================================= */
+
+    .date-number {
+
+        font-weight: bold;
+
+        color: #ffae00;
+
+    }
+
+
+    .day-name {
+
+        color: #ffae00;
+
+    }
+
+
+    /* ================================
+       STATUS
+    ================================= */
+
+    .status-form {
+
+        margin: 0;
+
+    }
+
+
+    .status-button {
+
+        border: none;
+
+        cursor: pointer;
+
+        border-radius: 20px;
+
+        padding: 8px 16px;
+
+        font-weight: bold;
+
+        min-width: 120px;
+
+        transition: .2s;
+
+    }
+
+
+    .status-button.available {
+
+        background: #e8f7ed;
+
+        color: #19863a;
+
+    }
+
+
+    .status-button.available:hover {
+
+        background: #22a447;
+
+        color: white;
+
+    }
+
+
+    .status-button.unavailable {
+
+        background: #fdeaea;
+
+        color: #d52c2c;
+
+    }
+
+
+    .status-button.unavailable:hover {
+
+        background: #e53935;
+
+        color: white;
+
+    }
+
+
+    /* ================================
+       MOBILE
+    ================================= */
+
+    @media (max-width: 700px) {
+
+        .calendar-page {
+
+            padding: 0 10px;
+
+        }
+
+
+        .property-header {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+        }
+
+
+        .property-header h1 {
+
+            font-size: 21px;
+
+        }
+
+
+        .calendar-card {
+
+            padding: 12px;
+
+        }
+
+
+        .calendar-top {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+        }
+
+
+        .legend {
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .dates-table {
+
+            font-size: 12px;
+
+        }
+
+
+        .dates-table th,
+        .dates-table td {
+
+            padding: 10px 7px;
+
+        }
+
+
+        .status-button {
+
+            min-width: 90px;
+
+            padding: 7px 8px;
+
+            font-size: 11px;
+
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="calendar-page">
+
+
+    <!-- =========================================
+         PROPERTY HEADER
+    ========================================== -->
+
+    <div class="property-header">
+
+        <div>
+
+            <h1>
+                {{ property.title }}
+            </h1>
+
+            <div class="property-location">
+
+                📍 {{ property.location }}
+
+                &nbsp;&nbsp;
+
+                💰 {{ property.price }} جنيه
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="{% url 'admin:app_list' app_label='properties' %}"
+            class="back-button">
+
+            العقارات
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================================
+         CALENDAR
+    ========================================== -->
+
+    <div class="calendar-card">
+
+
+        <div class="calendar-top">
+
+            <div class="calendar-title">
+
+                <h2>
+                    📅 أيام الحجز
+                </h2>
+
+                <p>
+                    اضغط على حالة أي يوم لتغييره
+                </p>
+
+            </div>
+
+
+            <div class="legend">
+
+                <div class="legend-item">
+
+                    <span class="dot available"></span>
+
+                    متاح
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span class="dot unavailable"></span>
+
+                    غير متاح
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             MONTH
+        ====================================== -->
+
+        <div class="month-navigation">
+
+
+            <a
+                href="?year={{ prev_year }}&month={{ prev_month }}">
+
+                ‹
+
+            </a>
+
+
+            <div class="month-name">
+
+                {{ month_name }} {{ year }}
+
+            </div>
+
+
+            <a
+                href="?year={{ next_year }}&month={{ next_month }}">
+
+                ›
+
+            </a>
+
+        </div>
+
+
+
+        <!-- =====================================
+             TABLE
+        ====================================== -->
+
+        <table class="dates-table">
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        التاريخ
+                    </th>
+
+                    <th>
+                        اليوم
+                    </th>
+
+                    <th>
+                        الحالة
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for item in days %}
+
+
+                <tr>
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        <span class="date-number">
+
+                            {{ item.date_text }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- DAY -->
+
+                    <td>
+
+                        <span class="day-name">
+
+                            {{ item.day_name }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="{% url 'admin:property_calendar_toggle' property.pk %}"
+                            class="status-form">
+
+                            {% csrf_token %}
+
+
+                            <input
+                                type="hidden"
+                                name="date"
+                                value="{{ item.date|date:'Y-m-d' }}"
+                            >
+
+
+                            {% if item.available %}
+
+                                <button
+                                    type="submit"
+                                    class="status-button available">
+
+                                    🟢 متاح
+
+                                </button>
+
+                            {% else %}
+
+                                <button
+                                    type="submit"
+                                    class="status-button unavailable">
+
+                                    🔴 غير متاح
+
+                                </button>
+
+                            {% endif %}
+
+                        </form>
+
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+</div>
+
+{% endblock %}
