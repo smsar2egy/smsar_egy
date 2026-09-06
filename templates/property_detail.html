@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{{ property.title }} | smsar_egy</title>
 
     <style>
@@ -51,7 +52,8 @@
             font-family: inherit;
         }
 
-        /* NAVBAR */
+        /* ================= NAVBAR ================= */
+
         .navbar {
             width: 100%;
             height: 70px;
@@ -88,7 +90,9 @@
             color: white;
         }
 
-        /* PAGE */
+
+        /* ================= PAGE ================= */
+
         .detail-page {
             width: 100%;
             max-width: 1150px;
@@ -103,7 +107,9 @@
             margin-bottom: 25px;
         }
 
-        /* PROPERTY CARD */
+
+        /* ================= PROPERTY CARD ================= */
+
         .property-main-card {
             width: 100%;
             max-width: 900px;
@@ -114,7 +120,9 @@
             overflow: hidden;
         }
 
-        /* GALLERY */
+
+        /* ================= GALLERY ================= */
+
         .gallery {
             width: 100%;
             background: #090909;
@@ -149,6 +157,9 @@
             font-size: 15px;
         }
 
+
+        /* STATUS */
+
         .property-status {
             position: absolute;
             top: 18px;
@@ -162,7 +173,59 @@
             border-radius: 5px;
         }
 
+
+        /* GALLERY ARROWS */
+
+        .gallery-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .65);
+            color: var(--yellow);
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 20;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-arrow:hover {
+            background: var(--yellow);
+            color: #000;
+        }
+
+        .gallery-arrow.prev {
+            right: 18px;
+        }
+
+        .gallery-arrow.next {
+            left: 18px;
+        }
+
+
+        /* IMAGE COUNTER */
+
+        .image-counter {
+            position: absolute;
+            bottom: 18px;
+            left: 18px;
+            z-index: 20;
+            background: rgba(0, 0, 0, .7);
+            color: white;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+
         /* THUMBNAILS */
+
         .gallery-thumbnails {
             width: 100%;
             display: flex;
@@ -195,7 +258,7 @@
             border-radius: 7px;
             border: 2px solid transparent;
             cursor: pointer;
-            opacity: .7;
+            opacity: .65;
             transition: .2s;
         }
 
@@ -209,7 +272,9 @@
             border-color: var(--yellow);
         }
 
-        /* INFO */
+
+        /* ================= INFO ================= */
+
         .property-info {
             padding: 25px;
         }
@@ -226,7 +291,9 @@
             margin-bottom: 20px;
         }
 
-        /* STATS */
+
+        /* ================= STATS ================= */
+
         .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -257,7 +324,9 @@
             font-size: 11px;
         }
 
-        /* DESCRIPTION */
+
+        /* ================= DESCRIPTION ================= */
+
         .description h2 {
             color: var(--yellow);
             font-size: 20px;
@@ -271,7 +340,9 @@
             white-space: pre-line;
         }
 
-        /* PRICE */
+
+        /* ================= PRICE ================= */
+
         .price {
             display: flex;
             justify-content: space-between;
@@ -291,7 +362,9 @@
             font-size: 25px;
         }
 
-        /* BOOKING BUTTON */
+
+        /* ================= BOOKING ================= */
+
         .booking-open {
             width: 100%;
             margin-top: 20px;
@@ -310,7 +383,6 @@
             background: white;
         }
 
-        /* BOOKING PANEL */
         .booking-panel {
             display: none;
             margin-top: 20px;
@@ -330,7 +402,9 @@
             margin-bottom: 18px;
         }
 
-        /* CALENDAR HEADER */
+
+        /* ================= CALENDAR ================= */
+
         .calendar-header {
             display: flex;
             justify-content: space-between;
@@ -362,7 +436,6 @@
             font-size: 17px;
         }
 
-        /* CALENDAR WEEK */
         .calendar-week {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -378,7 +451,6 @@
             font-weight: bold;
         }
 
-        /* CALENDAR DAYS */
         .calendar-days {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -438,12 +510,6 @@
             font-weight: bold;
         }
 
-        .day.selected:hover {
-            background: var(--yellow);
-            color: #000;
-        }
-
-        /* SELECTED DATE */
         .selected-date {
             margin-top: 18px;
             padding: 13px;
@@ -459,7 +525,6 @@
             color: var(--yellow);
         }
 
-        /* CONFIRM */
         .confirm-booking {
             width: 100%;
             margin-top: 12px;
@@ -477,7 +542,9 @@
             cursor: not-allowed;
         }
 
-        /* FOOTER */
+
+        /* ================= FOOTER ================= */
+
         footer {
             background: #000;
             border-top: 1px solid var(--yellow);
@@ -498,8 +565,11 @@
             font-size: 13px;
         }
 
-        /* MOBILE RESPONSIVENESS */
+
+        /* ================= MOBILE ================= */
+
         @media (max-width: 700px) {
+
             .navbar {
                 height: 64px;
                 padding: 0 16px;
@@ -529,6 +599,25 @@
                 height: 270px;
             }
 
+            .gallery-arrow {
+                width: 38px;
+                height: 38px;
+                font-size: 25px;
+            }
+
+            .gallery-arrow.prev {
+                right: 10px;
+            }
+
+            .gallery-arrow.next {
+                left: 10px;
+            }
+
+            .image-counter {
+                bottom: 10px;
+                left: 10px;
+            }
+
             .gallery-thumbnails {
                 gap: 8px;
                 padding: 10px 10px 5px;
@@ -551,10 +640,6 @@
 
             .location {
                 font-size: 12px;
-            }
-
-            .stats {
-                grid-template-columns: repeat(3, 1fr);
             }
 
             .stat {
@@ -600,323 +685,920 @@
             }
         }
 
-        @media (max-width: 400px) {
-            .nav a {
-                font-size: 10px;
-            }
-
-            .main-image {
-                height: 235px;
-            }
-
-            .gallery-thumb {
-                flex-basis: 70px;
-                width: 70px;
-                height: 56px;
-            }
-
-            .property-info {
-                padding: 14px;
-            }
-
-            .stat strong {
-                font-size: 16px;
-            }
-
-            .stat span {
-                font-size: 8px;
-            }
-
-            .day {
-                min-height: 36px;
-                font-size: 10px;
-            }
-
-            .calendar-week span {
-                font-size: 8px;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                transition: none !important;
-                scroll-behavior: auto !important;
-            }
-        }
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <a href="/" class="logo">smsar_egy</a>
-        <nav class="nav">
-            <a href="/">الرئيسية</a>
-            <a href="/properties/?type=sale">للبيع</a>
-            <a href="/properties/?type=rent">للإيجار</a>
-        </nav>
-    </header>
 
-    <!-- PROPERTY -->
-    <main class="detail-page">
-        <a href="/properties/" class="back-link">← رجوع للعقارات</a>
+<!-- ================= NAVBAR ================= -->
 
-        <div class="property-main-card">
-            <!-- GALLERY -->
-            <div class="gallery">
-                <div class="main-image">
-                    {% if property.image %}
-                        <img id="mainPropertyImage" src="{{ property.image.url }}" alt="{{ property.title }}">
-                    {% elif property.images.all %}
-                        {% with first_image=property.images.all.0 %}
-                            <img id="mainPropertyImage" src="{{ first_image.image.url }}" alt="{{ property.title }}">
-                        {% endwith %}
-                    {% else %}
-                        <div class="main-no-image">لا توجد صورة</div>
-                    {% endif %}
+<header class="navbar">
 
-                    <span class="property-status">
-                        {% if property.property_type == 'sale' %}
-                            للبيع
+    <a href="/" class="logo">
+        smsar_egy
+    </a>
+
+    <nav class="nav">
+        <a href="/">الرئيسية</a>
+        <a href="/properties/?type=sale">للبيع</a>
+        <a href="/properties/?type=rent">للإيجار</a>
+    </nav>
+
+</header>
+
+
+<!-- ================= PROPERTY ================= -->
+
+<main class="detail-page">
+
+    <a href="/properties/" class="back-link">
+        ← رجوع للعقارات
+    </a>
+
+
+    <div class="property-main-card">
+
+
+        <!-- ================= GALLERY ================= -->
+
+        <div class="gallery">
+
+
+            <div class="main-image">
+
+                {% if property.image %}
+
+                    <img
+                        id="mainPropertyImage"
+                        src="{{ property.image.url }}"
+                        alt="{{ property.title }}"
+                    >
+
+                {% else %}
+
+                    {% with first_image=property.images.first %}
+
+                        {% if first_image %}
+
+                            <img
+                                id="mainPropertyImage"
+                                src="{{ first_image.image.url }}"
+                                alt="{{ property.title }}"
+                            >
+
                         {% else %}
-                            للإيجار
-                        {% endif %}
-                    </span>
-                </div>
 
-                {% if property.image or property.images.all %}
-                <div class="gallery-thumbnails">
-                    {% if property.image %}
-                        <img src="{{ property.image.url }}" class="gallery-thumb active" onclick="changePropertyImage(this)" alt="{{ property.title }}" draggable="false">
+                            <div class="main-no-image">
+                                لا توجد صور لهذا العقار
+                            </div>
+
+                        {% endif %}
+
+                    {% endwith %}
+
+                {% endif %}
+
+
+                <span class="property-status">
+
+                    {% if property.property_type == 'sale' %}
+                        للبيع
+                    {% else %}
+                        للإيجار
                     {% endif %}
 
-                    {% for gallery_image in property.images.all %}
-                        <img src="{{ gallery_image.image.url }}" class="gallery-thumb {% if not property.image and forloop.first %}active{% endif %}" onclick="changePropertyImage(this)" alt="{{ property.title }}" draggable="false">
-                    {% endfor %}
+                </span>
+
+
+                <!-- GALLERY ARROWS -->
+
+                <button
+                    type="button"
+                    class="gallery-arrow prev"
+                    id="prevImage"
+                    aria-label="الصورة السابقة"
+                >
+                    ›
+                </button>
+
+
+                <button
+                    type="button"
+                    class="gallery-arrow next"
+                    id="nextImage"
+                    aria-label="الصورة التالية"
+                >
+                    ‹
+                </button>
+
+
+                <!-- COUNTER -->
+
+                <div class="image-counter" id="imageCounter">
+                    1 / 1
                 </div>
+
+
+            </div>
+
+
+            <!-- THUMBNAILS -->
+
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+
+
+                {% if property.image %}
+
+                    <img
+                        src="{{ property.image.url }}"
+                        class="gallery-thumb active"
+                        alt="{{ property.title }}"
+                        draggable="false"
+                    >
+
                 {% endif %}
+
+
+                {% for gallery_image in property.images.all %}
+
+                    <img
+                        src="{{ gallery_image.image.url }}"
+                        class="gallery-thumb {% if not property.image and forloop.first %}active{% endif %}"
+                        alt="{{ property.title }}"
+                        draggable="false"
+                    >
+
+                {% endfor %}
+
+
             </div>
 
-            <!-- INFO -->
-            <div class="property-info">
-                <h1>{{ property.title }}</h1>
-                <div class="location">📍 {{ property.get_location_display }}</div>
 
-                <!-- STATS -->
-                <div class="stats">
-                    <div class="stat">
-                        <strong>{{ property.area }}</strong>
-                        <span>متر مربع</span>
-                    </div>
-                    <div class="stat">
-                        <strong>{{ property.bedrooms }}</strong>
-                        <span>غرف</span>
-                    </div>
-                    <div class="stat">
-                        <strong>{{ property.bathrooms }}</strong>
-                        <span>حمام</span>
-                    </div>
-                </div>
-
-                <!-- DESCRIPTION -->
-                <div class="description">
-                    <h2>عن العقار</h2>
-                    <p>{{ property.description }}</p>
-                </div>
-
-                <!-- PRICE -->
-                <div class="price">
-                    <span>السعر</span>
-                    <strong>{{ property.price }} جنيه</strong>
-                </div>
-
-                <!-- BOOKING BUTTON -->
-                <button type="button" class="booking-open" id="openBooking">📅 احجز موعد</button>
-
-                <!-- BOOKING PANEL -->
-                <div class="booking-panel" id="bookingPanel">
-                    <div class="booking-title">اختار اليوم المناسب</div>
-
-                    <!-- CALENDAR HEADER -->
-                    <div class="calendar-header">
-                        <button type="button" id="prevMonth">‹</button>
-                        <strong id="monthTitle"></strong>
-                        <button type="button" id="nextMonth">›</button>
-                    </div>
-
-                    <!-- WEEK -->
-                    <div class="calendar-week">
-                        <span>أحد</span>
-                        <span>اثنين</span>
-                        <span>ثلاثاء</span>
-                        <span>أربعاء</span>
-                        <span>خميس</span>
-                        <span>جمعة</span>
-                        <span>سبت</span>
-                    </div>
-
-                    <!-- DAYS -->
-                    <div class="calendar-days" id="calendarDays"></div>
-
-                    <!-- SELECTED DATE -->
-                    <div class="selected-date" id="selectedDate">اختار يوم من التقويم</div>
-
-                    <!-- CONFIRM -->
-                    <button type="button" class="confirm-booking" id="confirmBooking" disabled>تأكيد الموعد</button>
-                </div>
-            </div>
         </div>
-    </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-logo">smsar_egy</div>
-        <p>عقارات مصر بطريقة مختلفة.</p>
-    </footer>
 
-    <!-- JAVASCRIPT -->
-    <script>
-        /* IMAGE GALLERY */
-        function changePropertyImage(element) {
-            const mainImage = document.getElementById("mainPropertyImage");
-            if (!mainImage) return;
+        <!-- ================= INFO ================= -->
 
-            mainImage.src = element.src;
+        <div class="property-info">
 
-            document.querySelectorAll(".gallery-thumb").forEach(function (image) {
-                image.classList.remove("active");
-            });
 
-            element.classList.add("active");
+            <h1>{{ property.title }}</h1>
+
+
+            <div class="location">
+                📍 {{ property.get_location_display }}
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>{{ property.area }}</strong>
+                    <span>متر مربع</span>
+                </div>
+
+                <div class="stat">
+                    <strong>{{ property.bedrooms }}</strong>
+                    <span>غرف</span>
+                </div>
+
+                <div class="stat">
+                    <strong>{{ property.bathrooms }}</strong>
+                    <span>حمام</span>
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="description">
+
+                <h2>عن العقار</h2>
+
+                <p>{{ property.description }}</p>
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="price">
+
+                <span>السعر</span>
+
+                <strong>
+                    {{ property.price }} جنيه
+                </strong>
+
+            </div>
+
+
+            <!-- BOOKING -->
+
+            <button
+                type="button"
+                class="booking-open"
+                id="openBooking"
+            >
+                📅 احجز موعد
+            </button>
+
+
+            <div
+                class="booking-panel"
+                id="bookingPanel"
+            >
+
+
+                <div class="booking-title">
+                    اختار اليوم المناسب
+                </div>
+
+
+                <div class="calendar-header">
+
+                    <button
+                        type="button"
+                        id="prevMonth"
+                    >
+                        ›
+                    </button>
+
+
+                    <strong id="monthTitle"></strong>
+
+
+                    <button
+                        type="button"
+                        id="nextMonth"
+                    >
+                        ‹
+                    </button>
+
+                </div>
+
+
+                <!-- WEEK -->
+
+                <div class="calendar-week">
+
+                    <span>أحد</span>
+                    <span>اثنين</span>
+                    <span>ثلاثاء</span>
+                    <span>أربعاء</span>
+                    <span>خميس</span>
+                    <span>جمعة</span>
+                    <span>سبت</span>
+
+                </div>
+
+
+                <!-- DAYS -->
+
+                <div
+                    class="calendar-days"
+                    id="calendarDays"
+                ></div>
+
+
+                <!-- SELECTED DATE -->
+
+                <div
+                    class="selected-date"
+                    id="selectedDate"
+                >
+                    اختار يوم من التقويم
+                </div>
+
+
+                <!-- CONFIRM -->
+
+                <button
+                    type="button"
+                    class="confirm-booking"
+                    id="confirmBooking"
+                    disabled
+                >
+                    تأكيد الموعد
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        smsar_egy
+    </div>
+
+    <p>
+        عقارات مصر بطريقة مختلفة.
+    </p>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+    /* =====================================================
+       IMAGE GALLERY
+    ===================================================== */
+
+
+    const mainImage = document.getElementById("mainPropertyImage");
+
+    const thumbnails = Array.from(
+        document.querySelectorAll(".gallery-thumb")
+    );
+
+    const prevImageButton =
+        document.getElementById("prevImage");
+
+    const nextImageButton =
+        document.getElementById("nextImage");
+
+    const imageCounter =
+        document.getElementById("imageCounter");
+
+
+    let currentImageIndex = 0;
+
+
+    function updateGallery(index) {
+
+        if (!mainImage || thumbnails.length === 0) {
+            return;
         }
 
-        /* CALENDAR */
-        document.addEventListener("DOMContentLoaded", function () {
-            const openBooking = document.getElementById("openBooking");
-            const bookingPanel = document.getElementById("bookingPanel");
-            const calendarDays = document.getElementById("calendarDays");
-            const monthTitle = document.getElementById("monthTitle");
-            const selectedDateBox = document.getElementById("selectedDate");
-            const confirmBooking = document.getElementById("confirmBooking");
-            const prevMonth = document.getElementById("prevMonth");
-            const nextMonth = document.getElementById("nextMonth");
 
-            let currentDate = new Date();
-            currentDate.setDate(1);
-            let selectedDate = null;
+        if (index < 0) {
+            index = thumbnails.length - 1;
+        }
 
-            const months = [
-                "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
-                "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
-            ];
 
-            /* ADMIN DATES */
-            const propertyDates = [
-                {% for item in dates %}
-                {
-                    date: "{{ item.date|date:'Y-m-d' }}",
-                    available: {{ item.available|yesno:"true,false" }}
-                }{% if not forloop.last %},{% endif %}
-                {% endfor %}
-            ];
+        if (index >= thumbnails.length) {
+            index = 0;
+        }
 
-            const datesMap = new Map();
-            propertyDates.forEach(function (item) {
-                datesMap.set(item.date, item.available);
+
+        currentImageIndex = index;
+
+
+        const selectedThumbnail =
+            thumbnails[currentImageIndex];
+
+
+        mainImage.src =
+            selectedThumbnail.src;
+
+
+        thumbnails.forEach(function (thumbnail) {
+
+            thumbnail.classList.remove("active");
+
+        });
+
+
+        selectedThumbnail.classList.add("active");
+
+
+        if (imageCounter) {
+
+            imageCounter.textContent =
+                (currentImageIndex + 1) +
+                " / " +
+                thumbnails.length;
+
+        }
+
+
+        selectedThumbnail.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center"
+        });
+
+    }
+
+
+    thumbnails.forEach(function (thumbnail, index) {
+
+        thumbnail.addEventListener("click", function () {
+
+            updateGallery(index);
+
+        });
+
+    });
+
+
+    if (prevImageButton) {
+
+        prevImageButton.addEventListener("click", function () {
+
+            updateGallery(currentImageIndex - 1);
+
+        });
+
+    }
+
+
+    if (nextImageButton) {
+
+        nextImageButton.addEventListener("click", function () {
+
+            updateGallery(currentImageIndex + 1);
+
+        });
+
+    }
+
+
+    /* HIDE ARROWS IF ONLY ONE IMAGE */
+
+    if (thumbnails.length <= 1) {
+
+        if (prevImageButton) {
+            prevImageButton.style.display = "none";
+        }
+
+        if (nextImageButton) {
+            nextImageButton.style.display = "none";
+        }
+
+    }
+
+
+    /* MOBILE SWIPE */
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+
+    if (mainImage) {
+
+        mainImage.addEventListener(
+            "touchstart",
+            function (event) {
+
+                touchStartX =
+                    event.changedTouches[0].screenX;
+
+            },
+            false
+        );
+
+
+        mainImage.addEventListener(
+            "touchend",
+            function (event) {
+
+                touchEndX =
+                    event.changedTouches[0].screenX;
+
+
+                const difference =
+                    touchEndX - touchStartX;
+
+
+                if (Math.abs(difference) > 50) {
+
+                    if (difference > 0) {
+
+                        updateGallery(
+                            currentImageIndex - 1
+                        );
+
+                    } else {
+
+                        updateGallery(
+                            currentImageIndex + 1
+                        );
+
+                    }
+
+                }
+
+            },
+            false
+        );
+
+    }
+
+
+    if (thumbnails.length > 0) {
+
+        const activeIndex =
+            thumbnails.findIndex(function (thumbnail) {
+
+                return thumbnail.classList.contains("active");
+
             });
 
-            /* OPEN BOOKING */
-            if (openBooking) {
-                openBooking.addEventListener("click", function () {
-                    bookingPanel.classList.toggle("active");
-                    if (bookingPanel.classList.contains("active")) {
-                        renderCalendar();
-                    }
-                });
-            }
 
-            /* RENDER CALENDAR */
-            function renderCalendar() {
-                if (!calendarDays) return;
-                calendarDays.innerHTML = "";
+        if (activeIndex >= 0) {
 
-                const year = currentDate.getFullYear();
-                const month = currentDate.getMonth();
+            currentImageIndex = activeIndex;
 
-                monthTitle.textContent = months[month] + " " + year;
+        }
 
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-                /* EMPTY CELLS */
-                for (let i = 0; i < firstDay; i++) {
-                    const emptyDay = document.createElement("div");
-                    emptyDay.className = "day empty";
-                    calendarDays.appendChild(emptyDay);
+        updateGallery(currentImageIndex);
+
+    }
+
+
+    /* =====================================================
+       BOOKING CALENDAR
+    ===================================================== */
+
+
+    const openBooking =
+        document.getElementById("openBooking");
+
+    const bookingPanel =
+        document.getElementById("bookingPanel");
+
+    const calendarDays =
+        document.getElementById("calendarDays");
+
+    const monthTitle =
+        document.getElementById("monthTitle");
+
+    const selectedDateBox =
+        document.getElementById("selectedDate");
+
+    const confirmBooking =
+        document.getElementById("confirmBooking");
+
+    const prevMonth =
+        document.getElementById("prevMonth");
+
+    const nextMonth =
+        document.getElementById("nextMonth");
+
+
+    let currentDate = new Date();
+
+    currentDate.setDate(1);
+
+
+    let selectedDate = null;
+
+
+    const months = [
+
+        "يناير",
+        "فبراير",
+        "مارس",
+        "أبريل",
+        "مايو",
+        "يونيو",
+        "يوليو",
+        "أغسطس",
+        "سبتمبر",
+        "أكتوبر",
+        "نوفمبر",
+        "ديسمبر"
+
+    ];
+
+
+    /* ADMIN DATES */
+
+    const propertyDates = [
+
+        {% for item in dates %}
+
+        {
+            date: "{{ item.date|date:'Y-m-d' }}",
+            available: {{ item.available|yesno:"true,false" }}
+        }
+
+        {% if not forloop.last %},{% endif %}
+
+        {% endfor %}
+
+    ];
+
+
+    const datesMap = new Map();
+
+
+    propertyDates.forEach(function (item) {
+
+        datesMap.set(
+            item.date,
+            item.available
+        );
+
+    });
+
+
+    /* OPEN BOOKING */
+
+    if (openBooking) {
+
+        openBooking.addEventListener(
+            "click",
+            function () {
+
+                bookingPanel.classList.toggle(
+                    "active"
+                );
+
+
+                if (
+                    bookingPanel.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    renderCalendar();
+
                 }
 
-                /* CREATE DAYS */
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dayButton = document.createElement("button");
-                    dayButton.type = "button";
-                    dayButton.className = "day";
-                    dayButton.textContent = day;
+            }
+        );
 
-                    const dateString = year + "-" + String(month + 1).padStart(2, "0") + "-" + String(day).padStart(2, "0");
+    }
 
-                    /* ADMIN AVAILABILITY ONLY */
-                    if (datesMap.has(dateString)) {
-                        const available = datesMap.get(dateString);
-                        if (available === false) {
-                            dayButton.classList.add("disabled");
-                            dayButton.disabled = true;
-                        }
-                    }
 
-                    /* SELECTED */
-                    if (selectedDate === dateString) {
-                        dayButton.classList.add("selected");
-                    }
+    /* RENDER CALENDAR */
 
-                    /* CLICK */
-                    dayButton.addEventListener("click", function () {
-                        if (dayButton.disabled) return;
+    function renderCalendar() {
 
-                        selectedDate = dateString;
-                        selectedDateBox.innerHTML = "الموعد المختار: " + "<strong>" + day + " " + months[month] + " " + year + "</strong>";
-                        confirmBooking.disabled = false;
-                        renderCalendar();
-                    });
+        if (!calendarDays) {
+            return;
+        }
 
-                    calendarDays.appendChild(dayButton);
+
+        calendarDays.innerHTML = "";
+
+
+        const year =
+            currentDate.getFullYear();
+
+
+        const month =
+            currentDate.getMonth();
+
+
+        monthTitle.textContent =
+            months[month] +
+            " " +
+            year;
+
+
+        const firstDay =
+            new Date(
+                year,
+                month,
+                1
+            ).getDay();
+
+
+        const daysInMonth =
+            new Date(
+                year,
+                month + 1,
+                0
+            ).getDate();
+
+
+        /* EMPTY DAYS */
+
+        for (
+            let i = 0;
+            i < firstDay;
+            i++
+        ) {
+
+            const emptyDay =
+                document.createElement("div");
+
+
+            emptyDay.className =
+                "day empty";
+
+
+            calendarDays.appendChild(
+                emptyDay
+            );
+
+        }
+
+
+        /* CREATE DAYS */
+
+        for (
+            let day = 1;
+            day <= daysInMonth;
+            day++
+        ) {
+
+
+            const dayButton =
+                document.createElement("button");
+
+
+            dayButton.type = "button";
+
+
+            dayButton.className = "day";
+
+
+            dayButton.textContent = day;
+
+
+            const dateString =
+                year +
+                "-" +
+                String(month + 1).padStart(2, "0") +
+                "-" +
+                String(day).padStart(2, "0");
+
+
+            /* AVAILABILITY */
+
+            if (
+                datesMap.has(dateString)
+            ) {
+
+                const available =
+                    datesMap.get(dateString);
+
+
+                if (available === false) {
+
+                    dayButton.classList.add(
+                        "disabled"
+                    );
+
+
+                    dayButton.disabled = true;
+
                 }
+
             }
 
-            /* PREVIOUS MONTH */
-            if (prevMonth) {
-                prevMonth.addEventListener("click", function () {
-                    currentDate.setMonth(currentDate.getMonth() - 1);
+
+            /* SELECTED */
+
+            if (
+                selectedDate === dateString
+            ) {
+
+                dayButton.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            /* CLICK */
+
+            dayButton.addEventListener(
+                "click",
+                function () {
+
+
+                    if (
+                        dayButton.disabled
+                    ) {
+                        return;
+                    }
+
+
+                    selectedDate =
+                        dateString;
+
+
+                    selectedDateBox.innerHTML =
+                        "الموعد المختار: " +
+                        "<strong>" +
+                        day +
+                        " " +
+                        months[month] +
+                        " " +
+                        year +
+                        "</strong>";
+
+
+                    confirmBooking.disabled =
+                        false;
+
+
                     renderCalendar();
-                });
-            }
 
-            /* NEXT MONTH */
-            if (nextMonth) {
-                nextMonth.addEventListener("click", function () {
-                    currentDate.setMonth(currentDate.getMonth() + 1);
-                    renderCalendar();
-                });
-            }
+                }
+            );
 
-            /* CONFIRM */
-            if (confirmBooking) {
-                confirmBooking.addEventListener("click", function () {
-                    if (!selectedDate) return;
-                    window.location.href = "{% url 'booking' property.pk %}" + "?date=" + encodeURIComponent(selectedDate);
-                });
+
+            calendarDays.appendChild(
+                dayButton
+            );
+
+        }
+
+    }
+
+
+    /* PREVIOUS MONTH */
+
+    if (prevMonth) {
+
+        prevMonth.addEventListener(
+            "click",
+            function () {
+
+                currentDate.setMonth(
+                    currentDate.getMonth() - 1
+                );
+
+
+                renderCalendar();
+
             }
-        });
-    </script>
+        );
+
+    }
+
+
+    /* NEXT MONTH */
+
+    if (nextMonth) {
+
+        nextMonth.addEventListener(
+            "click",
+            function () {
+
+                currentDate.setMonth(
+                    currentDate.getMonth() + 1
+                );
+
+
+                renderCalendar();
+
+            }
+        );
+
+    }
+
+
+    /* CONFIRM BOOKING */
+
+    if (confirmBooking) {
+
+        confirmBooking.addEventListener(
+            "click",
+            function () {
+
+                if (!selectedDate) {
+                    return;
+                }
+
+
+                window.location.href =
+                    "{% url 'booking' property.pk %}" +
+                    "?date=" +
+                    encodeURIComponent(
+                        selectedDate
+                    );
+
+            }
+        );
+
+    }
+
+
+});
+
+</script>
+
+
 </body>
 </html>
