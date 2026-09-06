@@ -692,7 +692,7 @@
                     {% endif %}
 
                     {% for gallery_image in property.images.all %}
-                        <img src="{{ gallery_image.image.url }}" class="gallery-thumb" onclick="changePropertyImage(this)" alt="{{ property.title }}" draggable="false">
+                        <img src="{{ gallery_image.image.url }}" class="gallery-thumb {% if not property.image and forloop.first %}active{% endif %}" onclick="changePropertyImage(this)" alt="{{ property.title }}" draggable="false">
                     {% endfor %}
                 </div>
                 {% endif %}
@@ -732,7 +732,7 @@
                 </div>
 
                 <!-- BOOKING BUTTON -->
-                <button type="button" class="booking-open" id="openBooking">📅احجز موعد</button>
+                <button type="button" class="booking-open" id="openBooking">📅 احجز موعد</button>
 
                 <!-- BOOKING PANEL -->
                 <div class="booking-panel" id="bookingPanel">
