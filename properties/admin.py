@@ -8,7 +8,7 @@ from .models import Property, PropertyImage, PropertyDate, Booking
 
 class PropertyImageInline(admin.TabularInline):
     model = PropertyImage
-    extra = 3
+    extra = 5
     fields = ('image', 'order')
 
 
@@ -18,8 +18,7 @@ class PropertyImageInline(admin.TabularInline):
 
 class PropertyDateInline(admin.TabularInline):
     model = PropertyDate
-    extra = 1
-    fields = ('date', 'available')
+    extra = 3
 
 
 # =========================
@@ -51,14 +50,6 @@ class PropertyAdmin(admin.ModelAdmin):
         'description',
     )
 
-    list_editable = (
-        'available',
-    )
-
-    ordering = (
-        '-created_at',
-    )
-
     inlines = [
         PropertyImageInline,
         PropertyDateInline,
@@ -78,15 +69,6 @@ class PropertyImageAdmin(admin.ModelAdmin):
         'created_at',
     )
 
-    list_filter = (
-        'property',
-    )
-
-    ordering = (
-        'property',
-        'order',
-    )
-
 
 # =========================
 # PROPERTY DATE ADMIN
@@ -103,10 +85,6 @@ class PropertyDateAdmin(admin.ModelAdmin):
 
     list_filter = (
         'available',
-        'date',
-    )
-
-    ordering = (
         'date',
     )
 
@@ -136,9 +114,4 @@ class BookingAdmin(admin.ModelAdmin):
     search_fields = (
         'full_name',
         'phone',
-        'property__title',
-    )
-
-    ordering = (
-        '-created_at',
     )
