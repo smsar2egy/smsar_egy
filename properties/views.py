@@ -1,5 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from datetime import datetime
+
 from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.views.decorators.http import require_POST
 
 from .models import Property, Booking, PropertyDate
 
@@ -40,19 +44,11 @@ def property_list(request):
         available=True
     ).order_by('-created_at')
 
-
-    # =========================
-    # SEARCH VALUES
-    # =========================
-
     property_type = request.GET.get('type')
     category = request.GET.get('category')
     location = request.GET.get('location')
 
-
-    # =========================
-    # FILTER BY SALE / RENT
-    # =========================
+    # SALE / RENT
 
     if property_type in ['sale', 'rent']:
 
@@ -60,10 +56,7 @@ def property_list(request):
             property_type=property_type
         )
 
-
-    # =========================
-    # FILTER BY CATEGORY
-    # =========================
+    # CATEGORY
 
     valid_categories = [
         'apartment',
@@ -79,10 +72,7 @@ def property_list(request):
             category=category
         )
 
-
-    # =========================
-    # FILTER BY LOCATION
-    # =========================
+    # LOCATION
 
     valid_locations = [
         'cairo',
@@ -100,21 +90,13 @@ def property_list(request):
             location=location
         )
 
-
-    # =========================
-    # PAGE
-    # =========================
-
     return render(
         request,
         'properties.html',
         {
             'properties': properties,
-
             'selected_type': property_type,
-
             'selected_category': category,
-
             'selected_location': location,
         }
     )
@@ -225,10 +207,7 @@ def booking(request, pk):
             'id_card'
         )
 
-
-        # =========================
         # CHECK REQUIRED DATA
-        # =========================
 
         if not all([
             full_name,
@@ -244,19 +223,15 @@ def booking(request, pk):
                 'من فضلك املأ كل البيانات المطلوبة.'
             )
 
-
         else:
 
-            # =========================
             # CHECK BLOCKED DATE
-            # =========================
 
             blocked_date = PropertyDate.objects.filter(
                 property=property,
                 date=booking_date,
                 available=False
             ).exists()
-
 
             if blocked_date:
 
@@ -265,35 +240,19 @@ def booking(request, pk):
                     'اليوم ده غير متاح للحجز.'
                 )
 
-
             else:
 
-                # =========================
                 # CREATE BOOKING
-                # =========================
 
                 Booking.objects.create(
-
                     property=property,
-
                     full_name=full_name,
-
                     phone=phone,
-
                     guests_count=guests_count,
-
                     id_card=id_card,
-
                     booking_date=booking_date,
-
                     booking_time=booking_time,
-
                 )
-
-
-                # =========================
-                # SUCCESS PAGE
-                # =========================
 
                 return render(
                     request,
@@ -305,16 +264,98 @@ def booking(request, pk):
                     }
                 )
 
-
-    # =========================
-    # BOOKING PAGE
-    # =========================
-
     return render(
         request,
         'booking.html',
         {
             'property': property,
             'selected_date': selected_date,
+        }
+    )
+
+
+# =========================
+# ADMIN CALENDAR
+# =========================
+
+def admin_calendar(request, property_id):
+
+    property = get_object_or_404(
+        Property,
+        id=property_id
+    )
+
+    dates = property.dates.all()
+
+    return render(
+        request,
+        'admin/property_calender.html',
+        {
+            'property': property,
+            'dates': dates,
+        }
+    )
+
+
+# =========================
+# ADMIN CALENDAR UPDATE
+# =========================
+
+@require_POST
+def admin_calendar_update(request, property_id):
+
+    property = get_object_or_404(
+        Property,
+        id=property_id
+    )
+
+    date_string = request.POST.get('date')
+    status = request.POST.get('status')
+
+    if not date_string or status not in [
+        'available',
+        'booked'
+    ]:
+
+        return JsonResponse(
+            {
+                'success': False,
+                'error': 'بيانات غير صحيحة'
+            },
+            status=400
+        )
+
+    try:
+
+        selected_date = datetime.strptime(
+            date_string,
+            '%Y-%m-%d'
+        ).date()
+
+    except ValueError:
+
+        return JsonResponse(
+            {
+                'success': False,
+                'error': 'التاريخ غير صحيح'
+            },
+            status=400
+        )
+
+    property_date, created = PropertyDate.objects.get_or_create(
+        property=property,
+        date=selected_date
+    )
+
+    property_date.available = (
+        status == 'available'
+    )
+
+    property_date.save()
+
+    return JsonResponse(
+        {
+            'success': True,
+            'available': property_date.available
         }
     )
