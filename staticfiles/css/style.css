@@ -1,0 +1,1058 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GOM3A | عقارات</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f3ef;
+            color: #17252b;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 82px;
+            padding: 0 7%;
+            background: #f5f3ef;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .navbar nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .navbar nav a {
+            font-size: 14px;
+            transition: .25s;
+        }
+
+        .navbar nav a:hover {
+            color: #a9854c;
+        }
+
+        .admin-btn {
+            border: 1px solid #17252b;
+            padding: 11px 20px;
+            font-size: 13px;
+            transition: .25s;
+        }
+
+        .admin-btn:hover {
+            background: #17252b;
+            color: white;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 650px;
+
+            display: flex;
+            align-items: center;
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    rgba(10, 25, 30, .45),
+                    rgba(10, 25, 30, .62)
+                ),
+                url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=85");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            width: 700px;
+            margin-right: 8%;
+            color: white;
+        }
+
+        .small-title {
+            font-size: 12px;
+            letter-spacing: 5px;
+            opacity: .85;
+        }
+
+        .hero h1 {
+            font-size: 65px;
+            line-height: 1.08;
+            margin: 20px 0;
+        }
+
+        .hero p {
+            max-width: 560px;
+            font-size: 17px;
+            line-height: 1.9;
+            color: #eee;
+        }
+
+        /* SEARCH */
+
+        .search-box {
+            margin-top: 35px;
+
+            background: white;
+            padding: 9px;
+
+            max-width: 850px;
+
+            display: flex;
+            gap: 8px;
+
+            border-radius: 5px;
+        }
+
+        .search-box input,
+        .search-box select {
+            border: none;
+            outline: none;
+
+            background: #f5f5f5;
+
+            padding: 15px;
+
+            font-size: 14px;
+
+            flex: 1;
+        }
+
+        .search-btn {
+            border: none;
+            background: #17252b;
+            color: white;
+
+            padding: 0 28px;
+
+            cursor: pointer;
+            font-size: 14px;
+
+            transition: .25s;
+        }
+
+        .search-btn:hover {
+            background: #a9854c;
+        }
+
+        /* ================= SECTIONS ================= */
+
+        .section {
+            padding: 110px 8%;
+        }
+
+        .section-title {
+            max-width: 650px;
+            margin-bottom: 50px;
+        }
+
+        .section-title span {
+            font-size: 11px;
+            letter-spacing: 4px;
+            opacity: .55;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            margin: 12px 0;
+        }
+
+        .section-title p {
+            color: #777;
+            line-height: 1.8;
+        }
+
+        /* ================= CATEGORIES ================= */
+
+        .categories {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 18px;
+        }
+
+        .category {
+            height: 300px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background: #ddd;
+
+            color: white;
+        }
+
+        .category img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition: .5s;
+        }
+
+        .category:hover img {
+            transform: scale(1.08);
+        }
+
+        .category::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    transparent 35%,
+                    rgba(0,0,0,.78)
+                );
+        }
+
+        .category-content {
+            position: absolute;
+
+            right: 25px;
+            bottom: 25px;
+
+            z-index: 2;
+        }
+
+        .category-content span {
+            font-size: 11px;
+            letter-spacing: 3px;
+            opacity: .8;
+        }
+
+        .category-content h3 {
+            font-size: 25px;
+            margin-top: 7px;
+        }
+
+        /* ================= LOCATIONS ================= */
+
+        .locations {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+        .location {
+            background: white;
+
+            min-height: 160px;
+
+            padding: 30px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            border: 1px solid #eee;
+
+            transition: .25s;
+        }
+
+        .location:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.07);
+        }
+
+        .location-icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .location h3 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .location p {
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* ================= SALE / RENT ================= */
+
+        .operation-section {
+            padding: 0 8% 110px;
+        }
+
+        .operation-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+        }
+
+        .operation {
+            height: 390px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            color: white;
+        }
+
+        .operation img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition: .5s;
+        }
+
+        .operation:hover img {
+            transform: scale(1.05);
+        }
+
+        .operation::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,.8)
+                );
+        }
+
+        .operation-content {
+            position: absolute;
+
+            right: 40px;
+            bottom: 35px;
+
+            z-index: 2;
+        }
+
+        .operation-content span {
+            font-size: 11px;
+            letter-spacing: 4px;
+        }
+
+        .operation-content h3 {
+            font-size: 35px;
+            margin: 10px 0;
+        }
+
+        .operation-content p {
+            margin-bottom: 20px;
+        }
+
+        .operation-content strong {
+            font-size: 14px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #17252b;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 70px 20px;
+        }
+
+        .footer-logo {
+            font-size: 35px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        footer p {
+            margin: 15px 0 30px;
+            color: #aaa;
+        }
+
+        .footer-line {
+            height: 1px;
+
+            background: rgba(255,255,255,.15);
+
+            max-width: 500px;
+
+            margin: auto auto 25px;
+        }
+
+        footer small {
+            color: #777;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 1000px) {
+
+            .categories {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .locations {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .navbar nav {
+                display: none;
+            }
+
+            .hero {
+                min-height: 650px;
+            }
+
+            .hero-content {
+                width: auto;
+                margin: 0 25px;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                height: 50px;
+            }
+
+            .section {
+                padding: 75px 20px;
+            }
+
+            .section-title h2 {
+                font-size: 32px;
+            }
+
+            .categories {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .category {
+                height: 220px;
+            }
+
+            .locations {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .operation-section {
+                padding: 0 20px 75px;
+            }
+
+            .operation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .operation {
+                height: 330px;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+
+            .locations {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <a href="/" class="logo">
+        GOM3A
+    </a>
+
+
+    <nav>
+
+        <a href="/">
+            الرئيسية
+        </a>
+
+        <a href="/sale/">
+            للبيع
+        </a>
+
+        <a href="/rent/">
+            للإيجار
+        </a>
+
+        <a href="#locations">
+            المناطق
+        </a>
+
+    </nav>
+
+
+    <a href="/admin/" class="admin-btn">
+        الإدارة
+    </a>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="small-title">
+            GOM3A REAL ESTATE
+        </span>
+
+        <h1>
+            لاقي عقارك<br>
+            المثالي
+        </h1>
+
+        <p>
+            شقق، فلل، شاليهات وعقارات للبيع والإيجار
+            في أفضل الأماكن داخل مصر.
+        </p>
+
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                placeholder="اكتب اسم المكان أو العقار..."
+            >
+
+
+            <select>
+
+                <option>
+                    نوع العقار
+                </option>
+
+                <option>
+                    شقة
+                </option>
+
+                <option>
+                    فيلا
+                </option>
+
+                <option>
+                    شاليه
+                </option>
+
+                <option>
+                    مصيف
+                </option>
+
+                <option>
+                    عقار
+                </option>
+
+            </select>
+
+
+            <select>
+
+                <option>
+                    نوع العملية
+                </option>
+
+                <option>
+                    للبيع
+                </option>
+
+                <option>
+                    للإيجار
+                </option>
+
+            </select>
+
+
+            <button class="search-btn">
+                بحث
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>
+            PROPERTY TYPES
+        </span>
+
+        <h2>
+            تصفح حسب نوع العقار
+        </h2>
+
+        <p>
+            اختار نوع العقار اللي بتدور عليه
+        </p>
+
+    </div>
+
+
+    <div class="categories">
+
+
+        <a href="#" class="category">
+
+            <img
+                src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=80"
+                alt="شقق"
+            >
+
+            <div class="category-content">
+
+                <span>
+                    APARTMENTS
+                </span>
+
+                <h3>
+                    شقق
+                </h3>
+
+            </div>
+
+        </a>
+
+
+        <a href="#" class="category">
+
+            <img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80"
+                alt="فلل"
+            >
+
+            <div class="category-content">
+
+                <span>
+                    VILLAS
+                </span>
+
+                <h3>
+                    فلل
+                </h3>
+
+            </div>
+
+        </a>
+
+
+        <a href="#" class="category">
+
+            <img
+                src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80"
+                alt="شاليهات"
+            >
+
+            <div class="category-content">
+
+                <span>
+                    CHALETS
+                </span>
+
+                <h3>
+                    شاليهات
+                </h3>
+
+            </div>
+
+        </a>
+
+
+        <a href="#" class="category">
+
+            <img
+                src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=80"
+                alt="مصايف"
+            >
+
+            <div class="category-content">
+
+                <span>
+                    SUMMER
+                </span>
+
+                <h3>
+                    مصايف
+                </h3>
+
+            </div>
+
+        </a>
+
+
+        <a href="#" class="category">
+
+            <img
+                src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=900&q=80"
+                alt="عقارات"
+            >
+
+            <div class="category-content">
+
+                <span>
+                    REAL ESTATE
+                </span>
+
+                <h3>
+                    عقارات
+                </h3>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= LOCATIONS ================= -->
+
+<section class="section" id="locations">
+
+    <div class="section-title">
+
+        <span>
+            LOCATIONS
+        </span>
+
+        <h2>
+            أشهر المناطق
+        </h2>
+
+        <p>
+            اختار المنطقة وشوف العقارات المتاحة فيها
+        </p>
+
+    </div>
+
+
+    <div class="locations">
+
+
+        <a href="#" class="location">
+
+            <div class="location-icon">
+                🏙️
+            </div>
+
+            <h3>
+                القاهرة
+            </h3>
+
+            <p>
+                عقارات القاهرة
+            </p>
+
+        </a>
+
+
+        <a href="#" class="location">
+
+            <div class="location-icon">
+                🏙️
+            </div>
+
+            <h3>
+                الجيزة
+            </h3>
+
+            <p>
+                عقارات الجيزة
+            </p>
+
+        </a>
+
+
+        <a href="#" class="location">
+
+            <div class="location-icon">
+                🌊
+            </div>
+
+            <h3>
+                الساحل الشمالي
+            </h3>
+
+            <p>
+                شاليهات وفلل
+            </p>
+
+        </a>
+
+
+        <a href="#" class="location">
+
+            <div class="location-icon">
+                🌴
+            </div>
+
+            <h3>
+                الغردقة
+            </h3>
+
+            <p>
+                عقارات الغردقة
+            </p>
+
+        </a>
+
+
+        <a href="#" class="location">
+
+            <div class="location-icon">
+                🏝️
+            </div>
+
+            <h3>
+                دهب
+            </h3>
+
+            <p>
+                عقارات دهب
+            </p>
+
+        </a>
+
+
+        <a href="#" class="location">
+
+            <div class="location-icon">
+                🌊
+            </div>
+
+            <h3>
+                شرم الشيخ
+            </h3>
+
+            <p>
+                عقارات شرم الشيخ
+            </p>
+
+        </a>
+
+
+        <a href="#" class="location">
+
+            <div class="location-icon">
+                ☀️
+            </div>
+
+            <h3>
+                العين السخنة
+            </h3>
+
+            <p>
+                شاليهات وفلل
+            </p>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= SALE / RENT ================= -->
+
+<section class="operation-section">
+
+    <div class="section-title">
+
+        <span>
+            FIND YOUR PROPERTY
+        </span>
+
+        <h2>
+            بتدور على إيه؟
+        </h2>
+
+    </div>
+
+
+    <div class="operation-grid">
+
+
+        <a href="/sale/" class="operation">
+
+            <img
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85"
+                alt="عقارات للبيع"
+            >
+
+            <div class="operation-content">
+
+                <span>
+                    FOR SALE
+                </span>
+
+                <h3>
+                    عقارات للبيع
+                </h3>
+
+                <p>
+                    شقق، فلل وشاليهات للبيع
+                </p>
+
+                <strong>
+                    اكتشف العقارات ←
+                </strong>
+
+            </div>
+
+        </a>
+
+
+        <a href="/rent/" class="operation">
+
+            <img
+                src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=85"
+                alt="عقارات للإيجار"
+            >
+
+            <div class="operation-content">
+
+                <span>
+                    FOR RENT
+                </span>
+
+                <h3>
+                    عقارات للإيجار
+                </h3>
+
+                <p>
+                    اختار مكانك واستأجر عقارك
+                </p>
+
+                <strong>
+                    اكتشف العقارات ←
+                </strong>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        GOM3A
+    </div>
+
+    <p>
+        منصتك للعقارات في مصر
+    </p>
+
+    <div class="footer-line"></div>
+
+    <small>
+        © 2026 GOM3A — جميع الحقوق محفوظة
+    </small>
+
+</footer>
+
+
+</body>
+
+</html>
